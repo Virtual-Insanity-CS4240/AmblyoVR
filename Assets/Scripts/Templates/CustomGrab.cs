@@ -36,22 +36,22 @@ public class CustomGrab : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        print(other.gameObject.name);
-        if (other.gameObject.CompareTag(collectorTag) 
-            && isGrabbing)
-        {
-            if (currGrabbedObject.tag == "WhiteChicken" || currGrabbedObject.tag == "WhiteChickenMeat")
-            {
-                PlayerInventory.CollectChicken?.Invoke(ChickenType.White);
-                audioSource.Play();
-            }
-            else if (currGrabbedObject.tag == "BlackChicken" || currGrabbedObject.tag == "BlackChickenMeat")
-            {
-                PlayerInventory.CollectChicken?.Invoke(ChickenType.Black);
-                audioSource.Play();
-            }
-            Destroy(currGrabbedObject);
-        }
+        //print(other.gameObject.name);
+        //if (other.gameObject.CompareTag(collectorTag) 
+        //    && isGrabbing)
+        //{
+        //    if (currGrabbedObject.tag == "WhiteChicken" || currGrabbedObject.tag == "WhiteChickenMeat")
+        //    {
+        //        PlayerInventory.CollectChicken?.Invoke(ChickenType.White);
+        //        audioSource.Play();
+        //    }
+        //    else if (currGrabbedObject.tag == "BlackChicken" || currGrabbedObject.tag == "BlackChickenMeat")
+        //    {
+        //        PlayerInventory.CollectChicken?.Invoke(ChickenType.Black);
+        //        audioSource.Play();
+        //    }
+        //    Destroy(currGrabbedObject);
+        //}
     }
 
     // For debugging

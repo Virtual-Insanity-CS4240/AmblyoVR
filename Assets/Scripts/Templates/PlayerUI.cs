@@ -53,16 +53,16 @@ public class PlayerUI : MonoBehaviour
         //     }
         // }
 
-        Queue<ChickenType> chickenQueue = PlayerInventory.GetChickenQueue?.Invoke();
-        ChickenType firstChicken = chickenQueue.Count > 0 ? chickenQueue.Peek() : ChickenType.None;
-        bulletImage.sprite = firstChicken == ChickenType.White ? whiteSprite : firstChicken == ChickenType.Black ? blackSprite : emptySprite;
-        GameObject newGun = firstChicken == ChickenType.White ? LoadedGunYellow : firstChicken == ChickenType.Black ? LoadedGunBlack : UnloadedGun;
-        if (newGun != currentGun)
-        {
-            currentGun.SetActive(false);
-            newGun.SetActive(true);
-            currentGun = newGun;
-            print("Changed gun!");
-        }
+        //Queue<ChickenType> chickenQueue = PlayerInventory.GetChickenQueue?.Invoke();
+        //ChickenType firstChicken = chickenQueue.Count > 0 ? chickenQueue.Peek() : ChickenType.None;
+        //bulletImage.sprite = firstChicken == ChickenType.White ? whiteSprite : firstChicken == ChickenType.Black ? blackSprite : emptySprite;
+        //GameObject newGun = firstChicken == ChickenType.White ? LoadedGunYellow : firstChicken == ChickenType.Black ? LoadedGunBlack : UnloadedGun;
+        //if (newGun != currentGun)
+        //{
+        //    currentGun.SetActive(false);
+        //    newGun.SetActive(true);
+        //    currentGun = newGun;
+        //    print("Changed gun!");
+        //}
     }
 }

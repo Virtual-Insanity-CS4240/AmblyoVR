@@ -18,44 +18,44 @@ public class ShootTrigger : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        // if you hold button
-        if (!isShooting && Input.GetAxis(shootButtonName) == 1)
-        {
-            print("Shoot");
-            isShooting = true;
-            Queue<ChickenType> chickenQueue = PlayerInventory.GetChickenQueue?.Invoke();
-            if (chickenQueue == null || (chickenQueue != null && chickenQueue.Count == 0))
-            {
-                print("No chickens in queue");
-            }
-            else
-            {
-                ChickenType? chicken = PlayerInventory.ShootChicken?.Invoke();
-                print(chicken);
-                print("Chickens in queue: " + chickenQueue.Count);
-                ShootObject((ChickenType)chicken);
-            }
-        }
+    //void Update()
+    //{
+    //    // if you hold button
+    //    if (!isShooting && Input.GetAxis(shootButtonName) == 1)
+    //    {
+    //        print("Shoot");
+    //        isShooting = true;
+    //        //Queue<ChickenType> chickenQueue = PlayerInventory.GetChickenQueue?.Invoke();
+    //        if (chickenQueue == null || (chickenQueue != null && chickenQueue.Count == 0))
+    //        {
+    //            print("No chickens in queue");
+    //        }
+    //        else
+    //        {
+    //            ChickenType? chicken = PlayerInventory.ShootChicken?.Invoke();
+    //            print(chicken);
+    //            print("Chickens in queue: " + chickenQueue.Count);
+    //            ShootObject((ChickenType)chicken);
+    //        }
+    //    }
 
-        if (isShooting && Input.GetAxis(shootButtonName) < 1)
-        {
-            isShooting = false;
-        }
-    }
+    //    if (isShooting && Input.GetAxis(shootButtonName) < 1)
+    //    {
+    //        isShooting = false;
+    //    }
+    //}
 
-    void ShootObject(ChickenType chicken)
-    {
-        GameObject chickenPrefab = chicken == ChickenType.White ? whiteChickenProjectile : blackChickenProjectile;
+    //void ShootObject(ChickenType chicken)
+    //{
+    //    GameObject chickenPrefab = chicken == ChickenType.White ? whiteChickenProjectile : blackChickenProjectile;
 
-        GameObject projectile = Instantiate(chickenPrefab, origin.position, origin.rotation);
+    //    GameObject projectile = Instantiate(chickenPrefab, origin.position, origin.rotation);
 
-        Rigidbody rb = projectile.GetComponent<Rigidbody>();
+    //    Rigidbody rb = projectile.GetComponent<Rigidbody>();
 
-        rb.AddForce(origin.forward * shootForce, ForceMode.Impulse);
+    //    rb.AddForce(origin.forward * shootForce, ForceMode.Impulse);
 
-        audioSource.Play();     
+    //    audioSource.Play();     
 
-    }
+    //}
 }
