@@ -28,6 +28,6 @@ namespace Delegates
 
     public delegate void ObjectEvent(object o);
 
-    public delegate void ChickenEvent(ChickenType chickenType);
-    public delegate ChickenType ChickenReturnEvent();
+    public delegate void BallEvent(Ball b);
+    public delegate Ball BallReturnEvent();
 }
