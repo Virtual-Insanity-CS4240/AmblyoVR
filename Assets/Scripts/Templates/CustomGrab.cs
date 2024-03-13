@@ -1,22 +1,24 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CustomGrab : MonoBehaviour
 {
-    public OVRInput.Controller Controller;
+    [SerializeField] private OVRInput.Controller Controller;
 
-    public string grabButtonName;
-    public float grabRadius;
-    [SerializeField] private Vector3 grabOffset;
-    public LayerMask grabMask;
-    [SerializeField] private string collectorTag;
+    [SerializeField] private string grabButtonName;
+    [SerializeField] private LayerMask grabMask;
+    private int grabbableLayer;
+    [SerializeField] private GameObject attachAchor;
 
     private GameObject currGrabbedObject;
     private bool isGrabbing;
     private AudioSource audioSource;
+    private List<GameObject> touchedObjects = new List<GameObject>();
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        grabbableLayer = (int) Mathf.Log(grabMask.value, 2);
     }
     // Update is called once per frame
     void Update()
@@ -36,7 +38,12 @@ public class CustomGrab : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        //print(other.gameObject.name);
+        print(other.gameObject.name);
+        if (other.gameObject.layer == grabbableLayer && !isGrabbing)
+        {
+            OVRInput.SetControllerVibration(0.5f, 0.5f, Controller);
+            touchedObjects.Add(other.gameObject);
+        }
         //if (other.gameObject.CompareTag(collectorTag) 
         //    && isGrabbing)
         //{
@@ -54,40 +61,37 @@ public class CustomGrab : MonoBehaviour
         //}
     }
 
-    // For debugging
-    void OnDrawGizmos()
+    void OnTriggerExit(Collider other)
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position + grabOffset, grabRadius);
+        if (touchedObjects.Contains(other.gameObject))
+        {
+            touchedObjects.Remove(other.gameObject);
+        }
     }
 
     void GrabObject()
     {
-        RaycastHit[] hits;
+        GameObject closestObject = null;
+        foreach (GameObject touchedObject in touchedObjects)
+        {
+            if (touchedObject.layer == grabbableLayer 
+                && (closestObject == null || Vector3.Distance(transform.position, touchedObject.transform.position) < Vector3.Distance(transform.position, closestObject.transform.position)))
+            {
+                closestObject = touchedObject;
+            }
+        }
 
-        hits = Physics.SphereCastAll(transform.position + grabOffset, grabRadius, transform.forward, 100.0f, grabMask);
-
-        if (hits.Length > 0)
+        if (closestObject)
         {
             isGrabbing = true;
 
-            int closestHit = 0;
-
-            for (int i = 0; i < hits.Length; i++)
-            {
-                if ((hits[i]).distance < hits[closestHit].distance)
-                {
-                    closestHit = i;
-                }
-            }
-
-            currGrabbedObject = hits[closestHit].transform.gameObject; // grab the closest object
+            currGrabbedObject = closestObject; // grab the closest object
             currGrabbedObject.GetComponent<Rigidbody>().isKinematic = true; // the grabbed object should not have gravity
+            grabbableLayer = currGrabbedObject.layer;
             currGrabbedObject.layer = gameObject.layer;
 
             // grab object will follow our hands
-            currGrabbedObject.transform.position = transform.position + grabOffset;
-            currGrabbedObject.transform.parent = transform;
+            currGrabbedObject.transform.SetParent(attachAchor.transform, true); // attach the grabbed object to our attachAnchor
         }
     }
 
@@ -100,7 +104,7 @@ public class CustomGrab : MonoBehaviour
         {
             currGrabbedObject.transform.parent = null;
             currGrabbedObject.GetComponent<Rigidbody>().isKinematic = false; // enable gravity again for the object
-
+            currGrabbedObject.layer = grabbableLayer;
             /**
              * Throw the object based on how hard we 'swing' our hand
              * 

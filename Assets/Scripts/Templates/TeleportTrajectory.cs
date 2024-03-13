@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Delegates;
 using UnityEngine;
+using System.Linq;
 
 public class TeleportTrajectory : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class TeleportTrajectory : MonoBehaviour
     [SerializeField] private int linePoints = 175;
     private Vector3[] linePositions;
     [SerializeField] private string teleportButtonName;
+    [SerializeField] private LayerMask teleportMask;
     private Vector3 telelocation;
     private bool canTeleport = false;
     private GameObject player;
@@ -68,26 +70,23 @@ public class TeleportTrajectory : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(linePositions[i - 1], position - linePositions[i - 1], out hit, (position - linePositions[i - 1]).magnitude))
             {
-                if (hit.collider.gameObject.layer != 2 && hit.collider.gameObject.layer != 3) // ignore raycast and grabbable
+                RaycastHit hit2;
+                if (Physics.Raycast(linePositions[i - 1], position - linePositions[i - 1], out hit2, (position - linePositions[i - 1]).magnitude, teleportMask))
                 {
-                    if (hit.collider.gameObject.layer == 6)
-                    {
-                        // Teleportable
-                        lineRenderer.endColor = Color.green;
-                        canTeleport = true;
-                        telelocation = hit.point;
-                    }
-                    else 
-                    {
-                        lineRenderer.endColor = Color.red;
-                        canTeleport = false;
-                        
-                    }
-                    lineRenderer.positionCount = i + 1;
-                    lineRenderer.SetPosition(i, hit.point);
-                    break;
+                    // Teleportable
+                    lineRenderer.endColor = Color.green;
+                    canTeleport = true;
+                    telelocation = hit.point;
                 }
+                else 
+                {
+                    lineRenderer.endColor = Color.red;
+                    canTeleport = false;
+                }
+                lineRenderer.positionCount = i + 1;
+                lineRenderer.SetPosition(i, hit.point);
                 Debug.DrawLine(linePositions[i - 1], position, Color.red, 0.0f, true);
+                break;
             }
             time += timeStep;
         }
