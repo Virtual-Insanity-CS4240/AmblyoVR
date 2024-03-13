@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Tutorial Steps:
+ * -1 = Havent begun tutorial
+ * 0 = Entered the tutorial room
+ * 1 = 
+ */
+
 public class TutorialManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int tutorialStep = 0;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
