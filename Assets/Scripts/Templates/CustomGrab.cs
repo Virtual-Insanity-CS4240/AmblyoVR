@@ -19,6 +19,12 @@ public class CustomGrab : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         grabbableLayer = (int) Mathf.Log(grabMask.value, 2);
+        if (attachAchor == null)
+        {
+            attachAchor = new GameObject("GrabAttachAnchor");
+            attachAchor.transform.parent = transform;
+            attachAchor.transform.localPosition = new Vector3(0f, 0f, 0.15f);
+        }
     }
     // Update is called once per frame
     void Update()
