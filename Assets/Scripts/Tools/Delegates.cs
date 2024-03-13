@@ -28,6 +28,6 @@ namespace Delegates
 
     public delegate void ObjectEvent(object o);
 
-    public delegate void BallEvent(Ball b);
-    public delegate Ball BallReturnEvent();
+    public delegate void BallColorEvent(BallColor bc);
+    public delegate BallColor? BallColorReturnEvent();
 }
