@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 482200569256868365}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ball_green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 1181002158811411660}
   - component: {fileID: 1181002158811411662}
   - component: {fileID: 1181002158811411661}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Quick Spikes Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4774,7 +4774,7 @@ GameObject:
   - component: {fileID: 5942402895285137191}
   - component: {fileID: 1042310489997177166}
   - component: {fileID: 7059404026534040847}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: "Smoke 0\xB0"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9666,7 +9666,7 @@ GameObject:
   - component: {fileID: 1508269691220517168}
   - component: {fileID: 1508269691220517174}
   - component: {fileID: 1508269691220517175}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: "Smoke 180\xB0"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14559,7 +14559,7 @@ GameObject:
   - component: {fileID: 1508269691377633067}
   - component: {fileID: 1508269691377633060}
   - component: {fileID: 1508269691377633065}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19639,7 +19639,7 @@ GameObject:
   - component: {fileID: 1508269691559003002}
   - component: {fileID: 1508269691559003000}
   - component: {fileID: 1508269691559003001}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rays
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24512,7 +24512,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1508269692203721239}
   - component: {fileID: 1508269692203721232}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24606,7 +24606,7 @@ GameObject:
   - component: {fileID: 1508269692786575231}
   - component: {fileID: 1508269692786575229}
   - component: {fileID: 1508269692786575230}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: "Smoke 90\xB0"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29498,7 +29498,7 @@ GameObject:
   - component: {fileID: 1508269693264383251}
   - component: {fileID: 1508269693264383249}
   - component: {fileID: 1508269693264383250}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: "Smoke 270\xB0"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34389,7 +34389,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1637177438587934204}
   - component: {fileID: 8196990238252859229}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34484,7 +34484,7 @@ GameObject:
   - component: {fileID: 3408963823187269603}
   - component: {fileID: 3408963823187269604}
   - component: {fileID: 6204769722581285007}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: glows
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39356,7 +39356,7 @@ GameObject:
   - component: {fileID: 8714842397519772110}
   - component: {fileID: 4617952910361506370}
   - component: {fileID: 1368240887492688101}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39437,7 +39437,7 @@ GameObject:
   - component: {fileID: 4897327315264142133}
   - component: {fileID: 4738306350903619755}
   - component: {fileID: 1843556988650657286}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Quick Spikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44167,7 +44167,7 @@ GameObject:
   - component: {fileID: 4099436879564738766}
   - component: {fileID: 7767474715028670595}
   - component: {fileID: 4848301900243514593}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
