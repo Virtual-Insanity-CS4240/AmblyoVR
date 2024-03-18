@@ -11,12 +11,12 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Grab
+  - Teleportable
   - Water
   - UI
-  - Teleportable
-  - 
-  - 
+  - Ball
+  - Ghost
+  - Grab
   - 
   - 
   - 
