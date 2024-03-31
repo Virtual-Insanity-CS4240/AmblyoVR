@@ -13,26 +13,33 @@ public class PlayerInventory : SimpleSingleton<PlayerInventory>
     private BallColor equippedBallColor = BallColor.Red;
     private int ballCount = 0;
 
-    public static BallColorReturnEvent GetEquippedBallColor;
+    public static BallColorReturnEvent EquipBall;
+    public static BallColorEvent BallColorChange;
     public static IntEvent ChangeBallCount;
 
     private void OnEnable()
     {
-        GetEquippedBallColor += HandleGetEquippedBallColor;
+        EquipBall += HandleEquipBall;
         ChangeBallCount += HandleChangeBallCount;
+        BallColorChange += HandleBallColorChange;
     }
 
     private void OnDisable()
     {
-        GetEquippedBallColor -= HandleGetEquippedBallColor;
+        EquipBall -= HandleEquipBall;
         ChangeBallCount -= HandleChangeBallCount;
+        BallColorChange -= HandleBallColorChange;
     }
 
-    private BallColor? HandleGetEquippedBallColor()
+    private BallColor? HandleEquipBall()
     {
         if (ballCount <= 0)
             return null;
-        return equippedBallColor;
+        else
+        {
+            ballCount--;
+            return equippedBallColor;
+        }
     }
 
     private void HandleChangeBallCount(int i)
@@ -41,5 +48,10 @@ public class PlayerInventory : SimpleSingleton<PlayerInventory>
             Debug.LogWarning("Ball count now <= 0! Should not even be able to equip!");
 
         ballCount += i;
+    }
+
+    private void HandleBallColorChange(BallColor color)
+    {
+        equippedBallColor = color;
     }
 }
