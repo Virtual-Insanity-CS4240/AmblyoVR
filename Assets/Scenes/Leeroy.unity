@@ -4863,6 +4863,18 @@ MonoBehaviour:
   rightEyeCamera: {fileID: 1003565348}
   ghostLayerName: Ghost
   ballLayerName: Ball
+--- !u!114 &794589997 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7608318919233568295, guid: 9591b24afb50c0747bff453113fce6ef,
+    type: 3}
+  m_PrefabInstance: {fileID: 1178263481}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f519ee736160fd243a427738466a5e80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &798333668
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6762,7 +6774,7 @@ MonoBehaviour:
   - {fileID: 2014029899}
   - {fileID: 932870602}
   - {fileID: 1333690659}
-  movementScript: {fileID: 0}
+  movementScript: {fileID: 794589997}
 --- !u!1 &1042396469
 GameObject:
   m_ObjectHideFlags: 0
