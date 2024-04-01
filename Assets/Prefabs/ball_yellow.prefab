@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7778727063297647605}
   - component: {fileID: 7637531139137816540}
   - component: {fileID: 8860826282235601774}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4904,7 +4904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9205bc1bbacc90040a998067b5643d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clearBehavior: 2
+  clearBehavior: 0
   cameraShake:
     enabled: 0
     useMainCamera: 1
@@ -5092,7 +5092,7 @@ GameObject:
   - component: {fileID: 8342446058366408087}
   - component: {fileID: 2328374689845368796}
   - component: {fileID: 8478781234924349587}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9966,7 +9966,7 @@ GameObject:
   - component: {fileID: 6511373360015757288}
   - component: {fileID: 7920511567708981356}
   - component: {fileID: 5915793055599942356}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: "Smoke 90\xB0"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14857,7 +14857,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3711438322341284088}
   - component: {fileID: 9007981508069204562}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14889,9 +14889,9 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.56078434, g: 0.48276404, b: 0.050980378, a: 1}
-  m_Intensity: 0
-  m_Range: 4
+  m_Color: {r: 0.7584331, g: 0.38490838, b: 0.05109866, a: 1}
+  m_Intensity: 4.6257687
+  m_Range: 10.779867
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -14951,9 +14951,7 @@ GameObject:
   - component: {fileID: 6207880905651738288}
   - component: {fileID: 7980879377035730236}
   - component: {fileID: 4335686475385018267}
-  - component: {fileID: 6644828079385026200}
-  - component: {fileID: 7869975103732923106}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15023,35 +15021,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &6644828079385026200
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2084894330281782056}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 20
-  m_Center: {x: -49.111717, y: 0, z: -1.0978346}
---- !u!54 &7869975103732923106
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2084894330281782056}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &2292986936369906425
 GameObject:
   m_ObjectHideFlags: 0
@@ -15063,7 +15032,7 @@ GameObject:
   - component: {fileID: 979008328925737580}
   - component: {fileID: 5764787014485087372}
   - component: {fileID: 2312225471783239084}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: "Smoke 0\xB0"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19953,7 +19922,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2911184542543598963}
-  m_Layer: 0
+  - component: {fileID: 5398841989025541646}
+  - component: {fileID: 1608171936794873907}
+  - component: {fileID: 1368676212924583447}
+  - component: {fileID: 5493711565076652019}
+  m_Layer: 6
   m_Name: ball_yellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19977,6 +19950,186 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &5398841989025541646
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2534763831118991305}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 2
+--- !u!114 &1608171936794873907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2534763831118991305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InteractionManager: {fileID: 0}
+  m_Colliders:
+  - {fileID: 1368676212924583447}
+  m_InteractionLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_InteractionLayers:
+    m_Bits: 2
+  m_DistanceCalculationMode: 1
+  m_SelectMode: 0
+  m_CustomReticle: {fileID: 0}
+  m_AllowGazeInteraction: 1
+  m_AllowGazeSelect: 1
+  m_OverrideGazeTimeToSelect: 0
+  m_GazeTimeToSelect: 0.5
+  m_OverrideTimeToAutoDeselectGaze: 0
+  m_TimeToAutoDeselectGaze: 3
+  m_AllowGazeAssistance: 0
+  m_FirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Activated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Deactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
+  m_StartingInteractionStrengthFilters: []
+  m_OnFirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnLastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectCanceled:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnActivate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnDeactivate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_AttachTransform: {fileID: 0}
+  m_SecondaryAttachTransform: {fileID: 0}
+  m_UseDynamicAttach: 1
+  m_MatchAttachPosition: 0
+  m_MatchAttachRotation: 1
+  m_SnapToColliderVolume: 1
+  m_ReinitializeDynamicAttachEverySingleGrab: 1
+  m_AttachEaseInTime: 0.15
+  m_MovementType: 0
+  m_VelocityDamping: 1
+  m_VelocityScale: 1
+  m_AngularVelocityDamping: 1
+  m_AngularVelocityScale: 1
+  m_TrackPosition: 1
+  m_SmoothPosition: 0
+  m_SmoothPositionAmount: 5
+  m_TightenPosition: 0.5
+  m_TrackRotation: 1
+  m_SmoothRotation: 0
+  m_SmoothRotationAmount: 5
+  m_TightenRotation: 0.5
+  m_ThrowOnDetach: 1
+  m_ThrowSmoothingDuration: 0.25
+  m_ThrowSmoothingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_ThrowVelocityScale: 2
+  m_ThrowAngularVelocityScale: 1
+  m_ForceGravityOnDetach: 0
+  m_RetainTransformParent: 1
+  m_AttachPointCompatibilityMode: 0
+  m_StartingSingleGrabTransformers: []
+  m_StartingMultipleGrabTransformers: []
+  m_AddDefaultGrabTransformers: 1
+--- !u!135 &1368676212924583447
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2534763831118991305}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.06
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5493711565076652019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2534763831118991305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80f36d10c842053419625fcbd16b53c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleSystems:
+  - {fileID: 7778727063297647605}
+  - {fileID: 6470734860285719106}
 --- !u!1 &3412834751384502429
 GameObject:
   m_ObjectHideFlags: 0
@@ -19988,7 +20141,7 @@ GameObject:
   - component: {fileID: 4260728753503690983}
   - component: {fileID: 6155449063834569559}
   - component: {fileID: 3529764105597326688}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Quick Spikes Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24719,7 +24872,7 @@ GameObject:
   - component: {fileID: 6470734860285719106}
   - component: {fileID: 2359539983240769025}
   - component: {fileID: 4237044906891716573}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: glows
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29439,7 +29592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9205bc1bbacc90040a998067b5643d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clearBehavior: 2
+  clearBehavior: 0
   cameraShake:
     enabled: 0
     useMainCamera: 1
@@ -29591,7 +29744,7 @@ GameObject:
   - component: {fileID: 2384692099875594770}
   - component: {fileID: 3171606459555409188}
   - component: {fileID: 386464956680723999}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Quick Spikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34321,7 +34474,7 @@ GameObject:
   - component: {fileID: 3246807628415856030}
   - component: {fileID: 4393796611377135242}
   - component: {fileID: 5076809137684437966}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rays
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39195,7 +39348,7 @@ GameObject:
   - component: {fileID: 4812690129636850139}
   - component: {fileID: 4667547120258581238}
   - component: {fileID: 6435745896830480539}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: "Smoke 180\xB0"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44086,7 +44239,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1568091022329849121}
   - component: {fileID: 2918609195199276690}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44118,7 +44271,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 0.90727246, b: 0.26666665, a: 1}
+  m_Color: {r: 0.76470584, g: 0.26737964, b: 1, a: 1}
   m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 30
@@ -44180,7 +44333,7 @@ GameObject:
   - component: {fileID: 2795688368222403944}
   - component: {fileID: 2674124522740397117}
   - component: {fileID: 1381632342532606331}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: "Smoke 270\xB0"
   m_TagString: Untagged
   m_Icon: {fileID: 0}

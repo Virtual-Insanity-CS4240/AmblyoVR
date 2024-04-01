@@ -7,16 +7,18 @@ TagManager:
   - Inventory
   - Hand
   - SamplesInfoPanel
+  - Wall
+  - Ghost
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Grab
+  - Teleportable
   - Water
   - UI
-  - Teleportable
-  - 
-  - 
+  - Ball
+  - Ghost
+  - Grab
   - 
   - 
   - 
