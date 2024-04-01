@@ -235,6 +235,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5398841989025541646, guid: 976d8aae5c7a3294ca291b86fe33131b,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     - target: {fileID: 5736634820945100590, guid: 976d8aae5c7a3294ca291b86fe33131b,
         type: 3}
       propertyPath: m_Layer
@@ -280,7 +285,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6617815
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3909,7 +3914,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -8.66, y: 0}
   m_SizeDelta: {x: 308, y: 229}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &793287538
@@ -8522,6 +8527,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5181926416952923414, guid: dfefbe830b2997142ba281f104d64325,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     - target: {fileID: 6858862503183057688, guid: dfefbe830b2997142ba281f104d64325,
         type: 3}
       propertyPath: m_Layer
@@ -9008,6 +9018,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 961034916828591625, guid: 3c3887a8e04bc4b499888a38ec9f1349,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     - target: {fileID: 1007344449044062391, guid: 3c3887a8e04bc4b499888a38ec9f1349,
         type: 3}
       propertyPath: m_Name
@@ -9101,6 +9116,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2091712684849261725, guid: d17b24f1cc90a6441acded5243708f72,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 126
       objectReference: {fileID: 0}
     - target: {fileID: 2526234319685963166, guid: d17b24f1cc90a6441acded5243708f72,
         type: 3}

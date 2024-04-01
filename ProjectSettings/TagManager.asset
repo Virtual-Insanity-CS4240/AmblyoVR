@@ -7,6 +7,8 @@ TagManager:
   - Inventory
   - Hand
   - SamplesInfoPanel
+  - Wall
+  - Ghost
   layers:
   - Default
   - TransparentFX
