@@ -25,6 +25,8 @@ public class GhostMovement : MonoBehaviour
     private float timer = 0f;
     private bool isWalking = true;
 
+    public Room roomReference;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -105,5 +107,11 @@ public class GhostMovement : MonoBehaviour
         Vector3 finalPosition = hit.position;
         agent.transform.Rotate(0f, 0f, 90f);
         agent.transform.position = finalPosition;
+    }
+
+    void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Ball")) {
+            roomReference.GhostHit;
+        }
     }
 }
