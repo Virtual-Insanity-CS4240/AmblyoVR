@@ -111,7 +111,7 @@ public class GhostMovement : MonoBehaviour
 
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Ball")) {
-            roomReference.GhostHit;
+            roomReference.GhostHit();
         }
     }
 }
