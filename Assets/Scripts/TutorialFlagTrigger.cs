@@ -10,7 +10,6 @@ public class TutorialFlagTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player") && TutorialManager.Instance.tutorialStep == neededFlagValue)
         {
-            Debug.Log("CUM");
             TutorialManager.UpdateTutorialFlag(neededFlagValue + 1);
         }
     }

@@ -5082,7 +5082,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 65961333}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.932, y: 2.06, z: 10.47}
+  m_LocalPosition: {x: 11.92, y: 2.22, z: 10.213}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1563034825}
@@ -5261,7 +5261,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 194792016}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.412, y: 2.199, z: 10.241}
+  m_LocalPosition: {x: 10.84, y: 1.882, z: 11.598}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1563034825}
@@ -19982,7 +19982,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 343342320}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.08, y: 2.058, z: 10.47}
+  m_LocalPosition: {x: 11.804, y: 2.058, z: 11.371}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1563034825}
@@ -44743,7 +44743,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1046310060}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.25, y: 1.457, z: 11.705}
+  m_LocalPosition: {x: 9.44, y: 1.457, z: 12.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1563034825}
@@ -49623,6 +49623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalGhosts: 3
+  isFirstRoom: 0
 --- !u!1 &1154133666
 GameObject:
   m_ObjectHideFlags: 0
@@ -65765,6 +65766,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalGhosts: 4
+  isFirstRoom: 0
 --- !u!1 &1656129493
 GameObject:
   m_ObjectHideFlags: 0
@@ -75644,13 +75646,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialStep: -1
-  redGhost: {fileID: 7252557991237821940, guid: 62d2a7f5da1084f6994dcbca19a2ddb2,
+  redGhost: {fileID: 7194138712535017970, guid: a2e66b6f7029937489f3d265cac120bf,
     type: 3}
-  greenGhost: {fileID: 7252557991237821940, guid: 51064a7a1e812f64cabadf9feee6a1ea,
+  greenGhost: {fileID: 3929302705248448239, guid: 1eccf0b077a5bfe41b721767693dea3f,
     type: 3}
-  yellowGhost: {fileID: 7252557991237821940, guid: bc42fe10568a6984e9c7a2c13ef05006,
+  yellowGhost: {fileID: 8987634043746394259, guid: 58dfc615b75095940be909b1aac95a70,
     type: 3}
-  purpleGhost: {fileID: 7252557991237821940, guid: b32e6e74038f4404ebbb9290bffacfd3,
+  purpleGhost: {fileID: 6048182921554923837, guid: d5fb815cf8614a24690ff53f51e11313,
     type: 3}
   room1: {fileID: 1563034826}
   firstRoomGhostSpawnTransforms:
@@ -75661,6 +75663,19 @@ MonoBehaviour:
   room2: {fileID: 1095261883}
   screen1: {fileID: 1508391978}
   screen2: {fileID: 220300115}
+  billboardMaterials:
+  - {fileID: 2100000, guid: d6978070a88b4b0479d10f5972ea9b8e, type: 2}
+  - {fileID: 2100000, guid: 02a62644343f6ad4295bfc818042dee5, type: 2}
+  - {fileID: 2100000, guid: 673a8aa3dcc183a4ead3327d7d0d44e9, type: 2}
+  - {fileID: 2100000, guid: edc50a11499cc124f92747791e49261a, type: 2}
+  - {fileID: 2100000, guid: 1fc661aefcbf03641847823560a0e554, type: 2}
+  - {fileID: 2100000, guid: 66bfb772a2966874fb2fe74c090df40f, type: 2}
+  - {fileID: 2100000, guid: 1bcc5f75b1605b9449749eb9b6eab35a, type: 2}
+  - {fileID: 2100000, guid: 3aab3436d1693ee498fbd18a3ddd0641, type: 2}
+  - {fileID: 2100000, guid: 7d3decabaf0caed4f902e9f81cf1c71b, type: 2}
+  - {fileID: 2100000, guid: 9580397651b0b9543a19d19ac9e35c26, type: 2}
+  - {fileID: 2100000, guid: 22075f0161c20c04287cce70cc647a28, type: 2}
+  - {fileID: 2100000, guid: b22388509618eeb49a3e3556872f1f4a, type: 2}
 --- !u!4 &1828437564
 Transform:
   m_ObjectHideFlags: 0

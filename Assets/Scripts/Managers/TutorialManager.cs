@@ -42,6 +42,9 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     public MeshRenderer screen1;
     public MeshRenderer screen2;
 
+    [Header("Materials")]
+    public Material[] billboardMaterials;
+
     private void OnEnable()
     {        
         UpdateTutorialFlag += HandleUpdateTutorialFlag;
@@ -120,9 +123,8 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     // Next: End of Dialogue
     private IEnumerator Flag0Event()
     {
-        // TODO: Show the string on screen
-        string message = "Welcome to Nice Ghosts Inc.! As our newest recruit, we’ll show you how to make ghosts nice through this interactive tutorial.";
-        yield return new WaitForSeconds(1);
+        screen1.material = billboardMaterials[0];
+        yield return new WaitForSeconds(3);
         HandleUpdateTutorialFlag(1);
     }
 
@@ -130,16 +132,16 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     // Next: Pick up Nice Balls
     private IEnumerator Flag1Event()
     {
-        string message = "First, you’ll see that there’s a box in front of you on the right of the table. Try using <CONTROL HERE> to pick up some balls!";
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.1f);
+        screen1.material = billboardMaterials[1];
     }
 
     // Start: <>
     // Next: <>
     private IEnumerator Flag2Event()
     {
-        string message = "Great! Notice how you only pick up 10 Nice Balls at a time and you only can have a maximum of 20 in your inventory!";
-        yield return new WaitForSeconds(1);
+        screen1.material = billboardMaterials[2];
+        yield return new WaitForSeconds(2);
         HandleUpdateTutorialFlag(3);
     }
 
@@ -147,13 +149,13 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     // Next: Kill all Ghosts
     private IEnumerator Flag3Event()
     {
-        string message1 = "Now let’s move on to the fun part: Nice-ifying ghosts!";
-        yield return new WaitForSeconds(1);
+        screen1.material = billboardMaterials[3];
+        yield return new WaitForSeconds(1.5f);
 
-        string message2 = "In your arsenal, there are 3 different types of Nice Balls: Red, Green, Purple and Yellow. You can switch between them using the Right Joystick!";
-        yield return new WaitForSeconds(1);
+        screen1.material = billboardMaterials[4];
+        yield return new WaitForSeconds(2f);
 
-        string message3 = "Try nice-ifying these ghosts! Use the same colour of the nice ball on the ghost of the same type! Remember, you can switch between the balls using the Right Joystick and can pick up more Nice Balls anytime using <CONTROL HERE>!";
+        screen1.material = billboardMaterials[5];
         // Spawn the four ghosts
         GameObject ghost1 = Instantiate(redGhost, firstRoomGhostSpawnTransforms[0].position, Quaternion.identity);
         GameObject ghost2 = Instantiate(greenGhost, firstRoomGhostSpawnTransforms[1].position, Quaternion.identity);
@@ -170,7 +172,7 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     // Next: Walk to second shooting range
     private IEnumerator Flag4Event()
     {
-        string message = "Good job! Now it’s time to take it up a notch. Move to the next range please!";
+        screen1.material = billboardMaterials[6];
         yield return new WaitForSeconds(1);
         //TODO: Open door to second range
     }
@@ -179,8 +181,9 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     // Next: Kill all the ghosts
     private IEnumerator Flag5Event()
     {
+        screen1.material = billboardMaterials[0]; // Reset billboard
         inSecondShootingStage = true;
-        string message = "Alright…now let’s see how you handle it…when the ghosts are moving around! Remember, you can switch between the balls using the Right Joystick and can pick up more Nice Balls anytime using <CONTROL HERE>!";
+        screen2.material = billboardMaterials[7];
         yield return new WaitForSeconds(1);
         // TODO: Spawn 3 ghosts
     }
@@ -189,18 +192,18 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     {
         // TODO: Change to spooky room lighting
         yield return new WaitForSeconds(1);
-        string message1 = "Boo! Did we scare you? Sometimes, rooms might have bosses that appear if you nice - ify all ghosts in a room. They can also fight back: if you get hit, you’ll lose some Nice Balls!";
-        yield return new WaitForSeconds(1);
-        string message2 = "But don’t be scared: it works just like any other ghost, just needs more Nice Balls to nice-ify it! Go ahead! Nice-ify this ghoul!";
+        screen2.material = billboardMaterials[8];
+        yield return new WaitForSeconds(3);
+        screen2.material = billboardMaterials[9];
     }
 
     private IEnumerator Flag7Event()
     {
         inSecondShootingStage = false;
-        string message1 = "Phew, that must’ve stressed you out! Don’t worry, the real thing is just like this training. You’ll do great!";
-        yield return new WaitForSeconds(1);
+        screen2.material = billboardMaterials[10];
+        yield return new WaitForSeconds(2);
         // TODO: Door opens
-        string message2 = "Head on back to the starting room to start nice-ifying ghosts for real, or do the tutorial again!";
+        screen2.material = billboardMaterials[11];
     }
 
     private void HandleBallCountIncreased(int i)
@@ -212,6 +215,7 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     private void HandleEndTutorial()
     {
         tutorialStep = -1;
+        screen2.material = billboardMaterials[7]; // Reset billboard 2
         // TODO: Shut door
     }    
 }
