@@ -19,27 +19,33 @@ using UnityEngine;
 
 public class TutorialManager : SimpleSingleton<TutorialManager>
 {
+    public int tutorialStep = -1;
+
     [Header("First Shooting Range")]
     [SerializeField] private GameObject redGhost;
     [SerializeField] private GameObject greenGhost;
-    [SerializeField] private GameObject blueGhost;
+    [SerializeField] private GameObject yellowGhost;
+    [SerializeField] private GameObject purpleGhost;
+    [SerializeField] private TutorialRoom room1;
 
     [SerializeField] private Transform[] firstRoomGhostSpawnTransforms;
-
 
     private bool inFirstShootingStage = false;
 
     [Header("Second Shooting Range")]
-
-    public int tutorialStep = 0;
+    [SerializeField] private TutorialRoom room2;
 
     private bool inSecondShootingStage = false;
 
     public static IntEvent UpdateTutorialFlag;    
     public static VoidEvent EndTutorial;
 
+    [Header("Billboards")]
+    public MeshRenderer screen1;
+    public MeshRenderer screen2;
+
     private void OnEnable()
-    {
+    {        
         UpdateTutorialFlag += HandleUpdateTutorialFlag;
         PlayerInventory.ChangeBallCount += HandleBallCountIncreased;
         EndTutorial += HandleEndTutorial;
@@ -139,14 +145,20 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
         string message1 = "Now let’s move on to the fun part: Nice-ifying ghosts!";
         yield return new WaitForSeconds(1);
 
-        string message2 = "In your arsenal, there are 3 different types of Nice Balls: Red, Green and Blue. You can switch between them using the Right Joystick!";
+        string message2 = "In your arsenal, there are 3 different types of Nice Balls: Red, Green, Purple and Yellow. You can switch between them using the Right Joystick!";
         yield return new WaitForSeconds(1);
 
         string message3 = "Try nice-ifying these ghosts! Use the same colour of the nice ball on the ghost of the same type! Remember, you can switch between the balls using the Right Joystick and can pick up more Nice Balls anytime using <CONTROL HERE>!";
-        // Spawn the three ghosts
-        Instantiate(redGhost, firstRoomGhostSpawnTransforms[0].position, Quaternion.identity);
-        Instantiate(greenGhost, firstRoomGhostSpawnTransforms[1].position, Quaternion.identity);
-        Instantiate(blueGhost, firstRoomGhostSpawnTransforms[2].position, Quaternion.identity);
+        // Spawn the four ghosts
+        GameObject ghost1 = Instantiate(redGhost, firstRoomGhostSpawnTransforms[0].position, Quaternion.identity);
+        GameObject ghost2 = Instantiate(greenGhost, firstRoomGhostSpawnTransforms[1].position, Quaternion.identity);
+        GameObject ghost3 = Instantiate(yellowGhost, firstRoomGhostSpawnTransforms[2].position, Quaternion.identity);
+        GameObject ghost4 = Instantiate(purpleGhost, firstRoomGhostSpawnTransforms[2].position, Quaternion.identity);
+
+        ghost1.GetComponent<TutorialGhost>().roomReference = room1;
+        ghost2.GetComponent<TutorialGhost>().roomReference = room1;
+        ghost3.GetComponent<TutorialGhost>().roomReference = room1;
+        ghost4.GetComponent<TutorialGhost>().roomReference = room1;
     }
 
     // Start: <>

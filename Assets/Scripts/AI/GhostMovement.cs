@@ -25,6 +25,7 @@ public class GhostMovement : MonoBehaviour
     private float timer = 0f;
     private bool isWalking = true;
 
+    public BallColor ghostColor;
     public Room roomReference;
 
     void Start()
@@ -109,9 +110,8 @@ public class GhostMovement : MonoBehaviour
         agent.transform.position = finalPosition;
     }
 
-    void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Ball")) {
-            roomReference.GhostHit();
-        }
+    public void GhostHit()
+    {
+        roomReference.GhostHit();
     }
 }

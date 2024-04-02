@@ -215,14 +215,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleSystems:
-  - {fileID: 1042310489997177166}
-  - {fileID: 1508269692786575229}
-  - {fileID: 1508269691220517174}
-  - {fileID: 1508269693264383249}
-  - {fileID: 1508269691559003000}
-  - {fileID: 1843556988650657286}
-  - {fileID: 1181002158811411661}
-  - {fileID: 7767474715028670595}
+  - {fileID: 1508269691377633067}
+  - {fileID: 3408963823187269603}
+  color: 1
 --- !u!1 &1181002158811411659
 GameObject:
   m_ObjectHideFlags: 0

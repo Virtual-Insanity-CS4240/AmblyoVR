@@ -1,30 +1,63 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BallBehaviour : MonoBehaviour
 {
     public ParticleSystem[] particleSystems;
+    public BallColor color;
 
+
+    // TODO after HOTO: Probably make this an interface to prevent DRY
     public void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Ghost"))
         {
-            Debug.Log("Hit Ghost");
-            foreach (ParticleSystem ps in particleSystems)
+            GhostMovement ghostMovement = other.gameObject.GetComponent<GhostMovement>();
+
+            if (ghostMovement.ghostColor == color)
             {
-                if (ps != null)
+                ghostMovement.GhostHit();
+                foreach (ParticleSystem ps in particleSystems)
                 {
-                    ps.Play();
+                    if (ps != null)
+                    {
+                        ps.Play();
+                    }
                 }
+                StartCoroutine(DestroyBall(0.5f));
             }
-            StartCoroutine(DestroyBall(2f));
+            else
+            {
+                // TODO: Handle negative case
+            }
+        }
+
+        if (other.gameObject.CompareTag("TutorialGhost"))
+        {
+            TutorialGhost tutorialGhost = other.gameObject.GetComponent<TutorialGhost>();
+
+            if (tutorialGhost.ghostColor == color)
+            {
+                tutorialGhost.GhostHit();
+                foreach (ParticleSystem ps in particleSystems)
+                {
+                    if (ps != null)
+                    {
+                        ps.Play();
+                    }
+                }
+                StartCoroutine(DestroyBall(0.5f));
+            }
+            else
+            {
+                // TODO: Handle negative case
+            }
         }
     }
 
     public IEnumerator DestroyBall(float time)
     {
-        Debug.Log("Destroying Ball");
+        GetComponent<Rigidbody>().useGravity = false;
         yield return new WaitForSeconds(time);
         Destroy(gameObject);
     }
