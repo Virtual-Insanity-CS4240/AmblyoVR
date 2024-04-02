@@ -30,8 +30,6 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
 
     [SerializeField] private Transform[] firstRoomGhostSpawnTransforms;
 
-    private bool inFirstShootingStage = false;
-
     [Header("Second Shooting Range")]
     [SerializeField] private TutorialRoom room2;
 
@@ -66,11 +64,6 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
 
     private void Update()
     {
-        if (inFirstShootingStage)
-        {
-            // TODO: Hook up events to ghosts dying to go to flag 4
-        }
-
         if (inSecondShootingStage)
         {
             // TODO: Check if ghosts died to go to flag 6
@@ -103,6 +96,18 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
                 StartCoroutine(Flag2Event());
                 break;
             case 3:
+                StartCoroutine(Flag3Event());
+                break;
+            case 4:
+                StartCoroutine(Flag3Event());
+                break;
+            case 5:
+                StartCoroutine(Flag3Event());
+                break;
+            case 6:
+                StartCoroutine(Flag3Event());
+                break;
+            case 7:
                 StartCoroutine(Flag3Event());
                 break;
             default:
@@ -168,7 +173,6 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
         string message = "Good job! Now it’s time to take it up a notch. Move to the next range please!";
         yield return new WaitForSeconds(1);
         //TODO: Open door to second range
-        inFirstShootingStage = false;
     }
 
     // Start: <>
