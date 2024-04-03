@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,19 +7,20 @@ public class CustomGrab : MonoBehaviour
     [SerializeField] private OVRInput.Controller Controller;
 
     [SerializeField] private string grabButtonName;
-    [SerializeField] private LayerMask grabMask;
-    private int grabbableLayer;
+    [SerializeField] private LayerMask[] grabMasks;
+    private List<int> grabbableLayer = new List<int>();
     [SerializeField] private GameObject attachAchor;
 
     private GameObject currGrabbedObject;
     private bool isGrabbing;
-    private AudioSource audioSource;
     private List<GameObject> touchedObjects = new List<GameObject>();
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-        grabbableLayer = (int) Mathf.Log(grabMask.value, 2);
+        foreach (LayerMask grabMask in grabMasks)
+        {
+            grabbableLayer.Add((int) Mathf.Log(grabMask.value, 2));
+        }
         if (attachAchor == null)
         {
             attachAchor = new GameObject("GrabAttachAnchor");
@@ -44,11 +46,11 @@ public class CustomGrab : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        print(other.gameObject.name);
-        if (other.gameObject.layer == grabbableLayer && !isGrabbing)
+        if (grabbableLayer.Contains(other.gameObject.layer) && !isGrabbing)
         {
-            OVRInput.SetControllerVibration(0.5f, 0.5f, Controller);
+            StartCoroutine(VibrateController(0.1f, 0.2f, 0.2f));
             touchedObjects.Add(other.gameObject);
+            Debug.Log("touched");
         }
         //if (other.gameObject.CompareTag(collectorTag) 
         //    && isGrabbing)
@@ -77,11 +79,11 @@ public class CustomGrab : MonoBehaviour
 
     void GrabObject()
     {
+        Debug.Log("grab");
         GameObject closestObject = null;
         foreach (GameObject touchedObject in touchedObjects)
         {
-            if (touchedObject.layer == grabbableLayer 
-                && (closestObject == null || Vector3.Distance(transform.position, touchedObject.transform.position) < Vector3.Distance(transform.position, closestObject.transform.position)))
+            if (closestObject == null || Vector3.Distance(transform.position, touchedObject.transform.position) < Vector3.Distance(transform.position, closestObject.transform.position))
             {
                 closestObject = touchedObject;
             }
@@ -93,11 +95,10 @@ public class CustomGrab : MonoBehaviour
 
             currGrabbedObject = closestObject; // grab the closest object
             currGrabbedObject.GetComponent<Rigidbody>().isKinematic = true; // the grabbed object should not have gravity
-            grabbableLayer = currGrabbedObject.layer;
-            currGrabbedObject.layer = gameObject.layer;
 
             // grab object will follow our hands
             currGrabbedObject.transform.SetParent(attachAchor.transform, true); // attach the grabbed object to our attachAnchor
+            currGrabbedObject.transform.localPosition = Vector3.zero;
         }
     }
 
@@ -110,7 +111,6 @@ public class CustomGrab : MonoBehaviour
         {
             currGrabbedObject.transform.parent = null;
             currGrabbedObject.GetComponent<Rigidbody>().isKinematic = false; // enable gravity again for the object
-            currGrabbedObject.layer = grabbableLayer;
             /**
              * Throw the object based on how hard we 'swing' our hand
              * 
@@ -123,5 +123,14 @@ public class CustomGrab : MonoBehaviour
 
             currGrabbedObject = null;
         }
+    }
+
+    IEnumerator VibrateController(float duration, float frequency, float amplitude)
+    {
+        OVRPlugin.SetControllerVibration((uint)Controller, frequency, amplitude);
+        // OVRInput.SetControllerVibration(frequency, amplitude, OVRInput.Controller.All);
+        yield return new WaitForSeconds(duration);
+        // OVRInput.SetControllerVibration(0, 0, OVRInput.Controller.All);
+        OVRPlugin.SetControllerVibration((uint)Controller, 0, 0);
     }
 }

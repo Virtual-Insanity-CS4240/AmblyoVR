@@ -319,10 +319,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Controller: 2
   grabButtonName: RHandTrigger
-  grabMask:
-    serializedVersion: 2
-    m_Bits: 8
-  attachAchor: {fileID: 0}
+  grabMasks:
+  - serializedVersion: 2
+    m_Bits: 64
+  - serializedVersion: 2
+    m_Bits: 256
+  attachAchor: {fileID: 623592926112983623}
 --- !u!1 &1310953745576385880
 GameObject:
   m_ObjectHideFlags: 0
