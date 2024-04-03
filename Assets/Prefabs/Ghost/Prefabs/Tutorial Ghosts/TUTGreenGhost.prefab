@@ -394,7 +394,7 @@ GameObject:
   - component: {fileID: 6829577524620274837}
   m_Layer: 0
   m_Name: TUTGreenGhost
-  m_TagString: Ghost
+  m_TagString: TutorialGhost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

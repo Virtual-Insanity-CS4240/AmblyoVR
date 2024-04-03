@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: -4006267274123621172}
   m_Layer: 0
   m_Name: TUTPurpleGhost
-  m_TagString: Ghost
+  m_TagString: TutorialGhost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
