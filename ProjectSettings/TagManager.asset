@@ -9,6 +9,7 @@ TagManager:
   - SamplesInfoPanel
   - Wall
   - Ghost
+  - TutorialGhost
   layers:
   - Default
   - TransparentFX
