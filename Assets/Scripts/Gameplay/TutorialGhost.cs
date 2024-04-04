@@ -10,6 +10,7 @@ public class TutorialGhost : MonoBehaviour
 
     public void GhostHit()
     {
-        roomReference.GhostHit();
+        if (roomReference != null)
+            roomReference.GhostHit();
     }
 }
