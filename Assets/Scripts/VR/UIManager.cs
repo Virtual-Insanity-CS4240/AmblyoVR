@@ -7,12 +7,7 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] firstScreen;
     [SerializeField] private GameObject[] secondScreen;
-    [SerializeField] private TeleportTrajectory movementScript;
     // Start is called before the first frame update
-    void Start()
-    {
-        movementScript.enabled = false;
-    }
     public void nextScreen()
     {
         foreach (GameObject screen in firstScreen)
@@ -37,7 +32,6 @@ public class UIManager : MonoBehaviour
     }
     public void done()
     {
-        movementScript.enabled = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

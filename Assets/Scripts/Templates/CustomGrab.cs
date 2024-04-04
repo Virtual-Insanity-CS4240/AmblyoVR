@@ -1,24 +1,35 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CustomGrab : MonoBehaviour
 {
     [SerializeField] private OVRInput.Controller Controller;
 
     [SerializeField] private string grabButtonName;
-    [SerializeField] private LayerMask grabMask;
-    private int grabbableLayer;
+    [SerializeField] private LayerMask[] grabMasks;
+    private List<int> grabbableLayer = new List<int>();
     [SerializeField] private GameObject attachAchor;
+    [SerializeField] private InputActionProperty changeColor;
+    [SerializeField] private GameObject hand;
+    [SerializeField] private int colorIndex = 0;
+    [SerializeField] private GameObject[] ballPrefabs;
+    private Color[] colors = { Color.red, Color.green, Color.magenta, Color.yellow };
+    private bool isJoystickReleased = true;
 
     private GameObject currGrabbedObject;
     private bool isGrabbing;
-    private AudioSource audioSource;
     private List<GameObject> touchedObjects = new List<GameObject>();
+    private bool grabTriggered = false;
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-        grabbableLayer = (int) Mathf.Log(grabMask.value, 2);
+        foreach (LayerMask grabMask in grabMasks)
+        {
+            grabbableLayer.Add((int) Mathf.Log(grabMask.value, 2));
+        }
         if (attachAchor == null)
         {
             attachAchor = new GameObject("GrabAttachAnchor");
@@ -33,6 +44,7 @@ public class CustomGrab : MonoBehaviour
         if (!isGrabbing && Input.GetAxis(grabButtonName) == 1)
         {
             GrabObject();
+            isGrabbing = true;
         }
 
         // if you let go of button
@@ -40,14 +52,33 @@ public class CustomGrab : MonoBehaviour
         {
             DropObject();
         }
+        if (changeColor != null)
+        {
+            Vector2 changeColorValue = changeColor.action.ReadValue<Vector2>();
+            if (isJoystickReleased && Math.Abs(changeColorValue.x) == 1 )
+            {
+                isJoystickReleased = false;
+                // Mathf.Clamp((int)changeColorValue.x + colorIndex, 0, 3); 
+                colorIndex = ((int)changeColorValue.x + colorIndex) < 0 ? 3 : ((int)changeColorValue.x + colorIndex) % 4;
+                Color colorHand = colors[colorIndex];
+                PlayerInventory.BallColorChange?.Invoke((BallColor)colorIndex);
+                hand.GetComponent<SkinnedMeshRenderer>().material.SetColor("_ColorTop", colorHand);
+                Debug.Log(colorHand);
+                Debug.Log(colorIndex);
+                Debug.Log("colorchange:" + changeColorValue.x);
+            }
+            if (changeColorValue == Vector2.zero)
+            {
+                isJoystickReleased = true;
+            }
+        }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        print(other.gameObject.name);
-        if (other.gameObject.layer == grabbableLayer && !isGrabbing)
+        if (grabbableLayer.Contains(other.gameObject.layer) && !isGrabbing)
         {
-            OVRInput.SetControllerVibration(0.5f, 0.5f, Controller);
+            StartCoroutine(VRControllerUtility.VibrateController(0.1f, 0.2f, 0.2f, Controller));
             touchedObjects.Add(other.gameObject);
         }
         //if (other.gameObject.CompareTag(collectorTag) 
@@ -77,40 +108,68 @@ public class CustomGrab : MonoBehaviour
 
     void GrabObject()
     {
-        GameObject closestObject = null;
-        foreach (GameObject touchedObject in touchedObjects)
+        if (!grabTriggered)
         {
-            if (touchedObject.layer == grabbableLayer 
-                && (closestObject == null || Vector3.Distance(transform.position, touchedObject.transform.position) < Vector3.Distance(transform.position, closestObject.transform.position)))
+            grabTriggered = true;
+            Debug.Log("grab");
+            GameObject closestObject = null;
+            foreach (GameObject touchedObject in touchedObjects)
             {
-                closestObject = touchedObject;
+                if (closestObject == null || Vector3.Distance(transform.position, touchedObject.transform.position) < Vector3.Distance(transform.position, closestObject.transform.position))
+                {
+                    closestObject = touchedObject;
+                }
             }
-        }
 
-        if (closestObject)
-        {
-            isGrabbing = true;
+            if (closestObject)
+            {
+                isGrabbing = true;
+                if (closestObject.CompareTag("Pouch"))
+                {
+                    BallColor? ballColor = PlayerInventory.EquipBall();
+                    if (ballColor != null)
+                    {
+                        int ballType = (int)ballColor;
+                        closestObject = Instantiate(ballPrefabs[ballType]);
+                        // currGrabbedObject.GetComponent<Rigidbody>().isKinematic = true; // the grabbed object should not have gravity
 
-            currGrabbedObject = closestObject; // grab the closest object
-            currGrabbedObject.GetComponent<Rigidbody>().isKinematic = true; // the grabbed object should not have gravity
-            grabbableLayer = currGrabbedObject.layer;
-            currGrabbedObject.layer = gameObject.layer;
+                        // // grab object will follow our hands
+                        // currGrabbedObject.transform.SetParent(attachAchor.transform, true); // attach the grabbed object to our attachAnchor
+                        // currGrabbedObject.transform.localPosition = Vector3.zero;
+                        // Debug.Log("CUM");
+                    }
+                    
+                }
+                else if (closestObject.CompareTag("Cache"))
+                {
+                    BallColor? ballColor = PlayerInventory.EquipBall();
+                    int ballType = (int)ballColor;
+                    Debug.Log("Cache");
+                    PlayerInventory.ChangeBallCount(10);
+                    closestObject = Instantiate(ballPrefabs[ballType]);
+                }
+                // normal grab
+                currGrabbedObject = closestObject; // grab the closest object
+                currGrabbedObject.GetComponent<Rigidbody>().isKinematic = true; // the grabbed object should not have gravity
 
-            // grab object will follow our hands
-            currGrabbedObject.transform.SetParent(attachAchor.transform, true); // attach the grabbed object to our attachAnchor
+                // grab object will follow our hands
+                currGrabbedObject.transform.SetParent(attachAchor.transform, true); // attach the grabbed object to our attachAnchor
+                currGrabbedObject.transform.localPosition = Vector3.zero;
+                Debug.Log("grabb");
+            }
         }
     }
 
     void DropObject()
     {
         isGrabbing = false;
-
+        
         // we are currently grabbing something, let it go
         if (currGrabbedObject != null)
         {
+            grabTriggered = false;
             currGrabbedObject.transform.parent = null;
             currGrabbedObject.GetComponent<Rigidbody>().isKinematic = false; // enable gravity again for the object
-            currGrabbedObject.layer = grabbableLayer;
             /**
              * Throw the object based on how hard we 'swing' our hand
              * 
@@ -120,6 +179,8 @@ public class CustomGrab : MonoBehaviour
              */
             currGrabbedObject.GetComponent<Rigidbody>().velocity = OVRInput.GetLocalControllerVelocity(Controller);
             currGrabbedObject.GetComponent<Rigidbody>().angularVelocity = OVRInput.GetLocalControllerAngularVelocity(Controller);
+            Debug.Log("velocity:" + currGrabbedObject.GetComponent<Rigidbody>().velocity);
+            Debug.Log(currGrabbedObject.GetComponent<Rigidbody>().angularVelocity);
 
             currGrabbedObject = null;
         }

@@ -18,7 +18,6 @@ public class ScreenLerpMotion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Vector3.Distance(transform.position, camera.transform.position));
         if (Vector3.Distance(transform.position, camera.transform.position) > thresholdDistance)
         {
             transform.position = camera.transform.position;
