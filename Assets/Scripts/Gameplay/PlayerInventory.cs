@@ -10,8 +10,8 @@ public enum BallColor
 
 public class PlayerInventory : SimpleSingleton<PlayerInventory>
 {
-    private BallColor equippedBallColor = BallColor.Red;
-    public int ballCount = 0;
+    public static BallColor equippedBallColor = BallColor.Red;
+    public static int ballCount = 0;
 
     public static BallColorReturnEvent EquipBall;
     public static BallColorEvent BallColorChange;
