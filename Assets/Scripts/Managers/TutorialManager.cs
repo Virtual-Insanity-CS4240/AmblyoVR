@@ -160,7 +160,7 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
         GameObject ghost1 = Instantiate(redGhost, firstRoomGhostSpawnTransforms[0].position, Quaternion.identity);
         GameObject ghost2 = Instantiate(greenGhost, firstRoomGhostSpawnTransforms[1].position, Quaternion.identity);
         GameObject ghost3 = Instantiate(yellowGhost, firstRoomGhostSpawnTransforms[2].position, Quaternion.identity);
-        GameObject ghost4 = Instantiate(purpleGhost, firstRoomGhostSpawnTransforms[2].position, Quaternion.identity);
+        GameObject ghost4 = Instantiate(purpleGhost, firstRoomGhostSpawnTransforms[3].position, Quaternion.identity);
 
         ghost1.GetComponent<TutorialGhost>().roomReference = room1;
         ghost2.GetComponent<TutorialGhost>().roomReference = room1;
