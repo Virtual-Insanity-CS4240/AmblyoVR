@@ -128,38 +128,42 @@ public class CustomGrab : MonoBehaviour
         {
             isGrabbing = true;
             StartCoroutine(VRControllerUtility.VibrateController(0.1f, 0.5f, 0.5f, Controller));
-            if (closestObject.CompareTag("Pouch"))
+            if (closestObject.CompareTag("Cache"))
             {
-                BallColor? ballColor = PlayerInventory.EquipBall();
-                Debug.Log("Color: " + ballColor);
-                if (ballColor != null)
-                {
-                    int ballType = (int)ballColor;
-                    closestObject = Instantiate(ballPrefabs[ballType]);
-                    // currGrabbedObject.GetComponent<Rigidbody>().isKinematic = true; // the grabbed object should not have gravity
-
-                    // // grab object will follow our hands
-                    // currGrabbedObject.transform.SetParent(attachAchor.transform, true); // attach the grabbed object to our attachAnchor
-                    // currGrabbedObject.transform.localPosition = Vector3.zero;
-                    // Debug.Log("CUM");
-                }
-                
-            }
-            else if (closestObject.CompareTag("Cache"))
-            {
-                BallColor? ballColor = PlayerInventory.EquipBall();
-                int ballType = (int)ballColor;
                 Debug.Log("Cache");
                 PlayerInventory.ChangeBallCount(10);
-                closestObject = Instantiate(ballPrefabs[ballType]);
             }
-            // normal grab
-            currGrabbedObject = closestObject; // grab the closest object
-            currGrabbedObject.GetComponent<Rigidbody>().isKinematic = true; // the grabbed object should not have gravity
+            else
+            {
+                if (closestObject.CompareTag("Pouch"))
+                {
+                    BallColor? ballColor = PlayerInventory.EquipBall();
+                    Debug.Log("Color: " + ballColor);
+                    if (ballColor != null)
+                    {
+                        int ballType = (int)ballColor;
+                        closestObject = Instantiate(ballPrefabs[ballType]);
+                        // currGrabbedObject.GetComponent<Rigidbody>().isKinematic = true; // the grabbed object should not have gravity
 
-            // grab object will follow our hands
-            currGrabbedObject.transform.SetParent(attachAchor.transform, true); // attach the grabbed object to our attachAnchor
-            currGrabbedObject.transform.localPosition = Vector3.zero;
+                        // // grab object will follow our hands
+                        // currGrabbedObject.transform.SetParent(attachAchor.transform, true); // attach the grabbed object to our attachAnchor
+                        // currGrabbedObject.transform.localPosition = Vector3.zero;
+                        // Debug.Log("CUM");
+                    }
+                    
+                }
+                // if (closestObject.transform.parent != null && closestObject.transform.parent.gameObject.CompareTag("Hand"))
+                // {
+                //     otherHand.GetComponent<CustomGrab>().DropObject();
+                // }
+                // // normal grab
+                currGrabbedObject = closestObject; // grab the closest object
+                currGrabbedObject.GetComponent<Rigidbody>().isKinematic = true; // the grabbed object should not have gravity
+
+                // grab object will follow our hands
+                currGrabbedObject.transform.SetParent(attachAchor.transform, true); // attach the grabbed object to our attachAnchor
+                currGrabbedObject.transform.localPosition = Vector3.zero;
+            }
             Debug.Log("grabcomplete");
         }
     }
@@ -169,7 +173,7 @@ public class CustomGrab : MonoBehaviour
         isGrabbing = false;
         
         // we are currently grabbing something, let it go
-        if (currGrabbedObject != null)
+        if (currGrabbedObject != null && currGrabbedObject.transform.parent != null && currGrabbedObject.transform.parent.gameObject == attachAchor)
         {
             currGrabbedObject.transform.parent = null;
             currGrabbedObject.GetComponent<Rigidbody>().isKinematic = false; // enable gravity again for the object
