@@ -27,6 +27,9 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     [SerializeField] private GameObject yellowGhost;
     [SerializeField] private GameObject purpleGhost;
     [SerializeField] private TutorialRoom room1;
+    [SerializeField] private DoorManager room2Door1;
+    [SerializeField] private DoorManager room2Door2;
+    [SerializeField] private DoorManager room3Door;
 
     [SerializeField] private Transform[] firstRoomGhostSpawnTransforms;
 
@@ -176,7 +179,9 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     {
         screen1.material = billboardMaterials[6];
         yield return new WaitForSeconds(5);
-        //TODO: Open door to second range
+        // Open door to second range
+        room2Door1.OpenDoor();
+        room2Door2.OpenDoor();
     }
 
     // Start: <>
@@ -193,7 +198,7 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     private IEnumerator Flag6Event()
     {
         // TODO: Change to spooky room lighting
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(3);
         screen2.material = billboardMaterials[8];
         yield return new WaitForSeconds(5);
         screen2.material = billboardMaterials[9];
@@ -204,7 +209,8 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
         inSecondShootingStage = false;
         screen2.material = billboardMaterials[10];
         yield return new WaitForSeconds(5);
-        // TODO: Door opens
+        // Door opens
+        room3Door.OpenDoor();
         screen2.material = billboardMaterials[11];
     }
 
