@@ -4,30 +4,34 @@ using UnityEngine;
 
 public class ScreenLerpMotion : MonoBehaviour
 {
-    [SerializeField] private GameObject camera;
+    [SerializeField] private GameObject cameraObject;
     [SerializeField] private float speed = 0.01f;
     [SerializeField] private float thresholdDistance = 0.1f;
     private float timeCount = 0.0f;
 
     void Start()
     {
-        transform.position = camera.transform.position;
-        transform.rotation = camera.transform.rotation;
+        transform.position = cameraObject.transform.position;
+        transform.rotation = cameraObject.transform.rotation;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(transform.position, camera.transform.position) > thresholdDistance)
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, new Quaternion(cameraObject.transform.rotation.x, cameraObject.transform.rotation.y, 0, cameraObject.transform.rotation.w), speed);
+        // transform.rotation = Quaternion.Lerp(transform.rotation, camera.transform.rotation, timeCount * speed);
+        timeCount += Time.deltaTime;
+    }
+    void FixedUpdate()
+    {
+        if (Vector3.Distance(transform.position, cameraObject.transform.position) > thresholdDistance)
         {
-            transform.position = camera.transform.position;
+            transform.position = cameraObject.transform.position;
         }
         else
         {
-            transform.position = Vector3.Lerp(transform.position, camera.transform.position, speed);
+            transform.position = Vector3.Lerp(transform.position, cameraObject.transform.position, speed);
         }
-        transform.rotation = Quaternion.Lerp(transform.rotation, new Quaternion(camera.transform.rotation.x, camera.transform.rotation.y, 0, camera.transform.rotation.w), speed);
-        // transform.rotation = Quaternion.Lerp(transform.rotation, camera.transform.rotation, timeCount * speed);
-        timeCount += Time.deltaTime;
     }
 }

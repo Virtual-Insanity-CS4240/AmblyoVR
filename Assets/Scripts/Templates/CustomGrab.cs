@@ -13,7 +13,7 @@ public class CustomGrab : MonoBehaviour
     private List<int> grabbableLayer = new List<int>();
     [SerializeField] private GameObject attachAchor;
     [SerializeField] private InputActionProperty changeColor;
-    [SerializeField] private GameObject hand;
+    [SerializeField] private GameObject[] hands;
     [SerializeField] private int colorIndex = 0;
     [SerializeField] private GameObject[] ballPrefabs;
     private Color[] colors = { Color.red, Color.green, Color.magenta, Color.yellow };
@@ -22,7 +22,6 @@ public class CustomGrab : MonoBehaviour
     private GameObject currGrabbedObject;
     private bool isGrabbing;
     private List<GameObject> touchedObjects = new List<GameObject>();
-    private bool grabTriggered = false;
 
     void Start()
     {
@@ -62,7 +61,10 @@ public class CustomGrab : MonoBehaviour
                 colorIndex = ((int)changeColorValue.x + colorIndex) < 0 ? 3 : ((int)changeColorValue.x + colorIndex) % 4;
                 Color colorHand = colors[colorIndex];
                 PlayerInventory.BallColorChange?.Invoke((BallColor)colorIndex);
-                hand.GetComponent<SkinnedMeshRenderer>().material.SetColor("_ColorTop", colorHand);
+                foreach (GameObject hand in hands)
+                {
+                    hand.GetComponent<SkinnedMeshRenderer>().material.SetColor("_ColorTop", colorHand);
+                }
                 Debug.Log(colorHand);
                 Debug.Log(colorIndex);
                 Debug.Log("colorchange:" + changeColorValue.x);
@@ -78,7 +80,10 @@ public class CustomGrab : MonoBehaviour
     {
         if (grabbableLayer.Contains(other.gameObject.layer) && !isGrabbing)
         {
-            StartCoroutine(VRControllerUtility.VibrateController(0.1f, 0.2f, 0.2f, Controller));
+            if (!other.gameObject.CompareTag("Pouch"))
+            {
+                StartCoroutine(VRControllerUtility.VibrateController(0.1f, 0.2f, 0.2f, Controller));
+            }
             touchedObjects.Add(other.gameObject);
         }
         //if (other.gameObject.CompareTag(collectorTag) 
@@ -108,55 +113,54 @@ public class CustomGrab : MonoBehaviour
 
     void GrabObject()
     {
-        if (!grabTriggered)
+
+        Debug.Log("grab");
+        GameObject closestObject = null;
+        foreach (GameObject touchedObject in touchedObjects)
         {
-            grabTriggered = true;
-            Debug.Log("grab");
-            GameObject closestObject = null;
-            foreach (GameObject touchedObject in touchedObjects)
+            if (closestObject == null || Vector3.Distance(transform.position, touchedObject.transform.position) < Vector3.Distance(transform.position, closestObject.transform.position))
             {
-                if (closestObject == null || Vector3.Distance(transform.position, touchedObject.transform.position) < Vector3.Distance(transform.position, closestObject.transform.position))
-                {
-                    closestObject = touchedObject;
-                }
+                closestObject = touchedObject;
             }
+        }
 
-            if (closestObject)
+        if (closestObject)
+        {
+            isGrabbing = true;
+            StartCoroutine(VRControllerUtility.VibrateController(0.1f, 0.5f, 0.5f, Controller));
+            if (closestObject.CompareTag("Pouch"))
             {
-                isGrabbing = true;
-                if (closestObject.CompareTag("Pouch"))
+                BallColor? ballColor = PlayerInventory.EquipBall();
+                Debug.Log("Color: " + ballColor);
+                if (ballColor != null)
                 {
-                    BallColor? ballColor = PlayerInventory.EquipBall();
-                    if (ballColor != null)
-                    {
-                        int ballType = (int)ballColor;
-                        closestObject = Instantiate(ballPrefabs[ballType]);
-                        // currGrabbedObject.GetComponent<Rigidbody>().isKinematic = true; // the grabbed object should not have gravity
-
-                        // // grab object will follow our hands
-                        // currGrabbedObject.transform.SetParent(attachAchor.transform, true); // attach the grabbed object to our attachAnchor
-                        // currGrabbedObject.transform.localPosition = Vector3.zero;
-                        // Debug.Log("CUM");
-                    }
-                    
-                }
-                else if (closestObject.CompareTag("Cache"))
-                {
-                    BallColor? ballColor = PlayerInventory.EquipBall();
                     int ballType = (int)ballColor;
-                    Debug.Log("Cache");
-                    PlayerInventory.ChangeBallCount(10);
                     closestObject = Instantiate(ballPrefabs[ballType]);
-                }
-                // normal grab
-                currGrabbedObject = closestObject; // grab the closest object
-                currGrabbedObject.GetComponent<Rigidbody>().isKinematic = true; // the grabbed object should not have gravity
+                    // currGrabbedObject.GetComponent<Rigidbody>().isKinematic = true; // the grabbed object should not have gravity
 
-                // grab object will follow our hands
-                currGrabbedObject.transform.SetParent(attachAchor.transform, true); // attach the grabbed object to our attachAnchor
-                currGrabbedObject.transform.localPosition = Vector3.zero;
-                Debug.Log("grabb");
+                    // // grab object will follow our hands
+                    // currGrabbedObject.transform.SetParent(attachAchor.transform, true); // attach the grabbed object to our attachAnchor
+                    // currGrabbedObject.transform.localPosition = Vector3.zero;
+                    // Debug.Log("CUM");
+                }
+                
             }
+            else if (closestObject.CompareTag("Cache"))
+            {
+                BallColor? ballColor = PlayerInventory.EquipBall();
+                int ballType = (int)ballColor;
+                Debug.Log("Cache");
+                PlayerInventory.ChangeBallCount(10);
+                closestObject = Instantiate(ballPrefabs[ballType]);
+            }
+            // normal grab
+            currGrabbedObject = closestObject; // grab the closest object
+            currGrabbedObject.GetComponent<Rigidbody>().isKinematic = true; // the grabbed object should not have gravity
+
+            // grab object will follow our hands
+            currGrabbedObject.transform.SetParent(attachAchor.transform, true); // attach the grabbed object to our attachAnchor
+            currGrabbedObject.transform.localPosition = Vector3.zero;
+            Debug.Log("grabcomplete");
         }
     }
 
@@ -167,7 +171,6 @@ public class CustomGrab : MonoBehaviour
         // we are currently grabbing something, let it go
         if (currGrabbedObject != null)
         {
-            grabTriggered = false;
             currGrabbedObject.transform.parent = null;
             currGrabbedObject.GetComponent<Rigidbody>().isKinematic = false; // enable gravity again for the object
             /**
@@ -179,8 +182,8 @@ public class CustomGrab : MonoBehaviour
              */
             currGrabbedObject.GetComponent<Rigidbody>().velocity = OVRInput.GetLocalControllerVelocity(Controller);
             currGrabbedObject.GetComponent<Rigidbody>().angularVelocity = OVRInput.GetLocalControllerAngularVelocity(Controller);
-            Debug.Log("velocity:" + currGrabbedObject.GetComponent<Rigidbody>().velocity);
-            Debug.Log(currGrabbedObject.GetComponent<Rigidbody>().angularVelocity);
+            // Debug.Log("velocity:" + currGrabbedObject.GetComponent<Rigidbody>().velocity);
+            // Debug.Log(currGrabbedObject.GetComponent<Rigidbody>().angularVelocity);
 
             currGrabbedObject = null;
         }

@@ -9,7 +9,8 @@ public class HandCalibration : MonoBehaviour
     [SerializeField] private InputActionProperty Bbutton;
     [SerializeField] private float timeAPressed = 1.0f;
     [SerializeField] private float timeBPressed = 1.0f;
-    [SerializeField] private GameObject hand;
+    [SerializeField] private GameObject leftHand;
+    [SerializeField] private GameObject rightHand;
     [SerializeField] private GameObject plane;
     [SerializeField] private GameObject pouch;
     private enum CalibrationState { None, Hand, Pouch};
@@ -22,7 +23,10 @@ public class HandCalibration : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Vector3 midPoint = (leftHand.transform.position + rightHand.transform.position) / 2;
+        // BodyManager planeManager = plane.GetComponent<BodyManager>();
+        // planeManager.SetOffsetFromCenter(midPoint);
+        // planeManager.SetScale(leftHand.transform.position, rightHand.transform.position);
     }
 
     // Update is called once per frame
@@ -39,9 +43,10 @@ public class HandCalibration : MonoBehaviour
         if (AbuttonValue == 1 && isAHold)
         {   
             Debug.Log("A pressed");
-            plane.transform.position = new Vector3(plane.transform.position.x, hand.transform.position.y, plane.transform.position.z);
-            PlaneManager runningManager = plane.GetComponent<PlaneManager>();
-            runningManager.SetDistanceFromHead(Camera.main.transform.position.y - plane.transform.position.y);
+            Vector3 midPoint = (leftHand.transform.position + rightHand.transform.position) / 2;
+            BodyManager planeManager = plane.GetComponent<BodyManager>();
+            planeManager.SetOffsetFromCenter(midPoint);
+            planeManager.SetScale(leftHand.transform.position, rightHand.transform.position);
             Debug.Log("Hand Calibrated");
             StartCoroutine(VRControllerUtility.VibrateController(0.3f, 0.7f, 0.7f, OVRInput.Controller.All));
             // NextState();
@@ -61,7 +66,9 @@ public class HandCalibration : MonoBehaviour
         if (BbuttonValue == 1 && isBHold)
         {   
             Debug.Log("B pressed");
-            pouch.transform.position = hand.transform.position;
+            Vector3 midPoint = (leftHand.transform.position + rightHand.transform.position) / 2;
+            pouch.transform.position = midPoint;
+            pouch.transform.localPosition = new Vector3(0, pouch.transform.localPosition.y, 0);
             // PouchManager pouchManager = pouch.GetComponent<PouchManager>();
             // pouchManager.SetDistanceFromHead(Camera.main.transform.position.y - pouch.transform.position.y);
             // Debug.Log("Pouch Calibrated");
