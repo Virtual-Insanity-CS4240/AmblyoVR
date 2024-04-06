@@ -8,8 +8,10 @@ public class TutorialFlagTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Triggered " + neededFlagValue);
         if (other.CompareTag("Player") && TutorialManager.Instance.tutorialStep == neededFlagValue)
         {
+            Debug.Log("Tutorial Flag Triggered");
             TutorialManager.UpdateTutorialFlag(neededFlagValue + 1);
         }
     }

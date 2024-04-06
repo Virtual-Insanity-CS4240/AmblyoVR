@@ -127,41 +127,43 @@ public class CustomGrab : MonoBehaviour
         if (closestObject)
         {
             isGrabbing = true;
+            bool haveObject = false;
             if (closestObject.CompareTag("Cache"))
             {
                 StartCoroutine(VRControllerUtility.VibrateController(0.2f, 0.5f, 0.5f, Controller));
                 Debug.Log("Cache");
                 PlayerInventory.ChangeBallCount(10);
             }
-            else
+            if (closestObject.CompareTag("Pouch"))
             {
-                if (closestObject.CompareTag("Pouch"))
+                BallColor? ballColor = PlayerInventory.EquipBall();
+                Debug.Log("Color: " + ballColor);
+                if (ballColor != null)
                 {
-                    BallColor? ballColor = PlayerInventory.EquipBall();
-                    Debug.Log("Color: " + ballColor);
-                    if (ballColor != null)
-                    {
-                        StartCoroutine(VRControllerUtility.VibrateController(0.1f, 0.5f, 0.5f, Controller));
-                        int ballType = (int)ballColor;
-                        closestObject = Instantiate(ballPrefabs[ballType]);
-                        // currGrabbedObject.GetComponent<Rigidbody>().isKinematic = true; // the grabbed object should not have gravity
+                    StartCoroutine(VRControllerUtility.VibrateController(0.1f, 0.5f, 0.5f, Controller));
+                    int ballType = (int)ballColor;
+                    closestObject = Instantiate(ballPrefabs[ballType]);
+                    haveObject = true;
+                    // currGrabbedObject.GetComponent<Rigidbody>().isKinematic = true; // the grabbed object should not have gravity
 
-                        // // grab object will follow our hands
-                        // currGrabbedObject.transform.SetParent(attachAchor.transform, true); // attach the grabbed object to our attachAnchor
-                        // currGrabbedObject.transform.localPosition = Vector3.zero;
-                        // Debug.Log("CUM");
-                    }
-                    else
-                    {
-                        StartCoroutine(VRControllerUtility.VibrateController(0.3f, 0.7f, 0.7f, Controller));
-                    }
-                    
+                    // // grab object will follow our hands
+                    // currGrabbedObject.transform.SetParent(attachAchor.transform, true); // attach the grabbed object to our attachAnchor
+                    // currGrabbedObject.transform.localPosition = Vector3.zero;
+                    // Debug.Log("CUM");
                 }
-                // if (closestObject.transform.parent != null && closestObject.transform.parent.gameObject.CompareTag("Hand"))
-                // {
-                //     otherHand.GetComponent<CustomGrab>().DropObject();
-                // }
-                // // normal grab
+                else
+                {
+                    StartCoroutine(VRControllerUtility.VibrateController(0.3f, 0.7f, 0.7f, Controller));
+                }
+            }
+                
+            // if (closestObject.transform.parent != null && closestObject.transform.parent.gameObject.CompareTag("Hand"))
+            // {
+            //     otherHand.GetComponent<CustomGrab>().DropObject();
+            // }
+            // // normal grab
+            if (haveObject)
+            {
                 currGrabbedObject = closestObject; // grab the closest object
                 currGrabbedObject.GetComponent<Rigidbody>().isKinematic = true; // the grabbed object should not have gravity
 

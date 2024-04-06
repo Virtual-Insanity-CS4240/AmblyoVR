@@ -102,16 +102,16 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
                 StartCoroutine(Flag3Event());
                 break;
             case 4:
-                StartCoroutine(Flag3Event());
+                StartCoroutine(Flag4Event());
                 break;
             case 5:
-                StartCoroutine(Flag3Event());
+                StartCoroutine(Flag5Event());
                 break;
             case 6:
-                StartCoroutine(Flag3Event());
+                StartCoroutine(Flag6Event());
                 break;
             case 7:
-                StartCoroutine(Flag3Event());
+                StartCoroutine(Flag7Event());
                 break;
             default:
                 Debug.LogWarning("Weird flag detected: " + tutorialStep);
@@ -124,6 +124,7 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     private IEnumerator Flag0Event()
     {
         screen1.material = billboardMaterials[0];
+        TutorialRoom.isFirstRoom = true;
         yield return new WaitForSeconds(3);
         HandleUpdateTutorialFlag(1);
     }
@@ -132,9 +133,9 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     // Next: Pick up Nice Balls
     private IEnumerator Flag1Event()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(5f);
         screen1.material = billboardMaterials[1];
-        HandleUpdateTutorialFlag(2);
+        // HandleUpdateTutorialFlag(2);
     }
 
     // Start: <>
@@ -142,7 +143,7 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     private IEnumerator Flag2Event()
     {
         screen1.material = billboardMaterials[2];
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(5);
         HandleUpdateTutorialFlag(3);
     }
 
@@ -151,10 +152,10 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     private IEnumerator Flag3Event()
     {
         screen1.material = billboardMaterials[3];
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(5f);
 
         screen1.material = billboardMaterials[4];
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
 
         screen1.material = billboardMaterials[5];
         // Spawn the four ghosts
@@ -174,7 +175,7 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     private IEnumerator Flag4Event()
     {
         screen1.material = billboardMaterials[6];
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(5);
         //TODO: Open door to second range
     }
 
@@ -185,7 +186,7 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
         screen1.material = billboardMaterials[0]; // Reset billboard
         inSecondShootingStage = true;
         screen2.material = billboardMaterials[7];
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(5);
         // TODO: Spawn 3 ghosts
     }
 
@@ -194,7 +195,7 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
         // TODO: Change to spooky room lighting
         yield return new WaitForSeconds(1);
         screen2.material = billboardMaterials[8];
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
         screen2.material = billboardMaterials[9];
     }
 
@@ -202,7 +203,7 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     {
         inSecondShootingStage = false;
         screen2.material = billboardMaterials[10];
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(5);
         // TODO: Door opens
         screen2.material = billboardMaterials[11];
     }
