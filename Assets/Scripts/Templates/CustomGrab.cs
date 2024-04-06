@@ -127,9 +127,9 @@ public class CustomGrab : MonoBehaviour
         if (closestObject)
         {
             isGrabbing = true;
-            StartCoroutine(VRControllerUtility.VibrateController(0.1f, 0.5f, 0.5f, Controller));
             if (closestObject.CompareTag("Cache"))
             {
+                StartCoroutine(VRControllerUtility.VibrateController(0.2f, 0.5f, 0.5f, Controller));
                 Debug.Log("Cache");
                 PlayerInventory.ChangeBallCount(10);
             }
@@ -141,6 +141,7 @@ public class CustomGrab : MonoBehaviour
                     Debug.Log("Color: " + ballColor);
                     if (ballColor != null)
                     {
+                        StartCoroutine(VRControllerUtility.VibrateController(0.1f, 0.5f, 0.5f, Controller));
                         int ballType = (int)ballColor;
                         closestObject = Instantiate(ballPrefabs[ballType]);
                         // currGrabbedObject.GetComponent<Rigidbody>().isKinematic = true; // the grabbed object should not have gravity
@@ -149,6 +150,10 @@ public class CustomGrab : MonoBehaviour
                         // currGrabbedObject.transform.SetParent(attachAchor.transform, true); // attach the grabbed object to our attachAnchor
                         // currGrabbedObject.transform.localPosition = Vector3.zero;
                         // Debug.Log("CUM");
+                    }
+                    else
+                    {
+                        StartCoroutine(VRControllerUtility.VibrateController(0.3f, 0.7f, 0.7f, Controller));
                     }
                     
                 }
