@@ -6,14 +6,31 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {    
     [SerializeField] private int totalGhosts;
+    [SerializeField] private bool isBossRoom;
+    [SerializeField] private Transform bossSpawnPosition;
+    [SerializeField] private GameObject bossPrefab;
     private int niceGhostCount = 0;
+
+    private bool roomActive = true;
 
     public void GhostHit() 
     {
         niceGhostCount++;
-        if (niceGhostCount == totalGhosts) {
-            Debug.Log("All ghosts have been hit!");
-            // Instantiate Boss in Room if have
+        if (niceGhostCount == totalGhosts)
+        {            
+            if (isBossRoom)
+            {
+                // Instantiate Boss in Room if have, turn light spookier
+            }
+            else
+            {
+                // TODO: Remove spooky light from the room
+            }
         }
+    }
+
+    public void BossDied()
+    {
+        // TODO: Remove spooky light from the room
     }
 }
