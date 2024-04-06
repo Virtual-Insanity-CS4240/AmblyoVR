@@ -132,7 +132,19 @@ public class CustomGrab : MonoBehaviour
             {
                 StartCoroutine(VRControllerUtility.VibrateController(0.2f, 0.5f, 0.5f, Controller));
                 Debug.Log("Cache");
-                PlayerInventory.ChangeBallCount(10);
+                if (PlayerInventory.ballCount <= PlayerInventory.maxBallCount - 10)
+                {
+                    PlayerInventory.ChangeBallCount(10);
+                }
+                else if (PlayerInventory.ballCount < PlayerInventory.maxBallCount)
+                {
+                    PlayerInventory.ChangeBallCount(PlayerInventory.maxBallCount - PlayerInventory.ballCount);
+                }
+                else
+                {
+                    StartCoroutine(VRControllerUtility.VibrateController(0.3f, 0.7f, 0.7f, Controller));
+                    Debug.LogWarning("Cache is full");
+                }
             }
             if (closestObject.CompareTag("Pouch"))
             {

@@ -12,6 +12,7 @@ public class PlayerInventory : SimpleSingleton<PlayerInventory>
 {
     public static BallColor equippedBallColor = BallColor.Red;
     public static int ballCount = 0;
+    public static int maxBallCount = 20;
 
     public static BallColorReturnEvent EquipBall;
     public static BallColorEvent BallColorChange;
@@ -46,7 +47,8 @@ public class PlayerInventory : SimpleSingleton<PlayerInventory>
     {
         if (ballCount + i <= 0)
             Debug.LogWarning("Ball count now <= 0! Should not even be able to equip!");
-
+        if (ballCount + i > maxBallCount)
+            Debug.LogWarning("Ball count now > 20! Should not be able to pick up more balls!");
         ballCount += i;
     }
 
