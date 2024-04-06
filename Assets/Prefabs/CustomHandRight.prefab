@@ -280,7 +280,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1310953745576382342}
-  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071067}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children:
@@ -324,6 +324,8 @@ MonoBehaviour:
     m_Bits: 64
   - serializedVersion: 2
     m_Bits: 256
+  - serializedVersion: 2
+    m_Bits: 2048
   attachAchor: {fileID: 623592926112983623}
   changeColor:
     m_UseReference: 1
@@ -331,14 +333,16 @@ MonoBehaviour:
       m_Name: Change Color
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 7edf7b8d-6d72-4048-a4bd-b439d3dbe48b
+      m_Id: 1850a6dd-83d1-47a1-9d8b-ff9349e8ae18
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: -5913262927076077117, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
-  hand: {fileID: 1312084641696222564}
+  hands:
+  - {fileID: 1312084641696222564}
+  - {fileID: 0}
   colorIndex: 0
   ballPrefabs:
   - {fileID: 2845889871990366237, guid: d17b24f1cc90a6441acded5243708f72, type: 3}
@@ -2402,7 +2406,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8747598215022335238}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.01

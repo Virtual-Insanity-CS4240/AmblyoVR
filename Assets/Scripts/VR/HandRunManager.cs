@@ -12,19 +12,19 @@ public class HandRunManager : SimpleSingleton<HandRunManager>
     [SerializeField] private GameObject leftHand;
     [SerializeField] private GameObject rightHand;
     [SerializeField] private string movementYAxisName;
-    [SerializeField] private InputActionProperty movementYAxis;
     [SerializeField] private float timeoutThreshold = 0.3f;
-    [SerializeField] private float timeoutMove = 0.8f;
     [SerializeField] private float speed = 1f;
+    [SerializeField] private float stoppingSpeed = 2f;
     private Vector3 movement = Vector3.zero;
-    private IEnumerator coroutine;
     private CharacterController characterController;
     private GameObject player;
-    private bool isTimeout = false;
-    private bool isMove = false;
+    private float leftTimer;
+    private float rightTimer;
+    private int directionForward = 1;
     private int leftHandValue = 0;
     private int rightHandValue = 0;
-    private Vector3 direction;
+    private int tempLeftHandValue = 0;
+    private int tempRightHandValue = 0;
 
     private void OnEnable()
     {
@@ -47,97 +47,89 @@ public class HandRunManager : SimpleSingleton<HandRunManager>
     {
         // Debug.Log(leftHandValue + " " + rightHandValue);
         // Debug.Log("move:" + movement);
-        if (movement != Vector3.zero && Input.GetAxis(movementYAxisName) != 0)
+        if (Input.GetAxis(movementYAxisName) > 0)
         {
-            Vector3 forward = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
-            direction = forward * Input.GetAxis(movementYAxisName) * -1;
+            directionForward = -1;
         }
-        if (isMove)
+        else
         {
-            if (coroutine != null)
-            {
-                StopCoroutine(coroutine);
-            }
-            coroutine = TimeMove();
-            StartCoroutine(coroutine);
-            isMove = false;
+            directionForward = 1;
+        }
+        leftTimer += Time.deltaTime;
+        rightTimer += Time.deltaTime;
+        if (leftTimer > timeoutThreshold)
+        {
+            // Debug.Log("Left Timeout");
+            leftHandValue = 0;
+        }
+        if (rightTimer > timeoutThreshold)
+        {
+            // Debug.Log("Right Timeout");
+            rightHandValue = 0;
         }
     }
 
     void FixedUpdate()
     {
-        characterController.Move(direction * speed * Time.deltaTime);
+        if (!characterController.isGrounded)
+        {
+            movement.y += Physics.gravity.y * Time.fixedDeltaTime;
+        }
+        characterController.Move(movement * Time.fixedDeltaTime);
+        movement = Vector3.Lerp(movement, Vector3.zero, Time.fixedDeltaTime * stoppingSpeed);
     }
     private void HandleLeftHandEntered(int value)
     {
-        if (leftHandValue == 0)
+        if (tempLeftHandValue == 0)
         {
-            leftHandValue = value;
-            if (!isTimeout)
-            {
-                StartCoroutine(Timeout());
-                isTimeout = true;
-            }
+            tempLeftHandValue = value;
         }
         else
         {
-            leftHandValue -= value;
-            if (rightHandValue + leftHandValue == 0)
+            leftHandValue = value - tempLeftHandValue;
+            if (leftHandValue != 0)
             {
-                leftHandValue = 0;
-                rightHandValue = 0;
-                isTimeout = false;
+                leftTimer = 0;
+            }
+            if (rightHandValue + leftHandValue == 0 && rightHandValue != 0)
+            {
+                // leftHandValue = 0;
+                // rightHandValue = 0;
                 Move();
             }
+            tempLeftHandValue = value;
         }
+        // Debug.Log("LEFT: leftHandValue:" + leftHandValue + ", rightHandValue:" + rightHandValue);
     }
     private void HandleRightHandEntered(int value)
     {
-        if (rightHandValue == 0)
+        if (tempRightHandValue == 0)
         {
-            rightHandValue = value;
-            if (!isTimeout)
-            {
-                StartCoroutine(Timeout());
-                isTimeout = true;
-            }
+            tempRightHandValue = value;
         }
         else
         {
-            rightHandValue -= value;
-            if (rightHandValue + leftHandValue == 0)
+            rightHandValue = value - tempRightHandValue;
+            if (rightHandValue != 0)
             {
-                leftHandValue = 0;
-                rightHandValue = 0;
-                isTimeout = false;
+                rightTimer = 0;
+            }
+            if (rightHandValue + leftHandValue == 0 && leftHandValue != 0)
+            {
+                // leftHandValue = 0;
+                // rightHandValue = 0;
                 Move();
             }
+            tempRightHandValue = value;
         }
+        // Debug.Log("RIGHT: leftHandValue:" + leftHandValue + ", rightHandValue:" + rightHandValue);
     }
 
     private void Move()
     {
         StartCoroutine(VRControllerUtility.VibrateController(0.1f, 0.5f, 0.5f, OVRInput.Controller.All));
-        Vector3 midpoint = transform.position = Vector3.Lerp(leftHand.transform.position, rightHand.transform.position, 0.5f);
-        Vector3 direction = (midpoint - characterController.transform.position).normalized;
-        movement = new Vector3(direction.x, 0, direction.z);
-        isMove = true;
-        Debug.Log("movement:" + movement);
-    }
-
-    private IEnumerator Timeout()
-    {
-        yield return new WaitForSeconds(timeoutThreshold);
-        if (isTimeout)
-        {
-            leftHandValue = 0;
-            rightHandValue = 0;
-            isTimeout = false;
-        }
-    }
-    private IEnumerator TimeMove()
-    {
-        yield return new WaitForSeconds(timeoutMove);
-        movement = Vector3.zero;
+        Vector3 direction = Camera.main.transform.forward.normalized * speed * directionForward;
+        movement = movement + new Vector3(direction.x, 0, direction.z);
+        // Debug.Log("movement:" + movement);
     }
 }

@@ -41,7 +41,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 284156559753450210}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.01
@@ -1298,9 +1298,11 @@ MonoBehaviour:
     m_Bits: 256
   - serializedVersion: 2
     m_Bits: 64
+  - serializedVersion: 2
+    m_Bits: 2048
   attachAchor: {fileID: 7376621684676174679}
   changeColor:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Change Color
       m_Type: 0
@@ -1310,8 +1312,11 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 0}
-  hand: {fileID: 8082664249579891213}
+    m_Reference: {fileID: -5913262927076077117, guid: c348712bda248c246b8c49b3db54643f,
+      type: 3}
+  hands:
+  - {fileID: 8082664249579891213}
+  - {fileID: 0}
   colorIndex: 0
   ballPrefabs:
   - {fileID: 2845889871990366237, guid: d17b24f1cc90a6441acded5243708f72, type: 3}
