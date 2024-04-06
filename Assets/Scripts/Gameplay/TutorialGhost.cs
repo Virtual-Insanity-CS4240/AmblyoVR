@@ -5,6 +5,8 @@ using UnityEngine;
 public class TutorialGhost : MonoBehaviour
 {
     public TutorialRoom roomReference;
+    [SerializeField] private Material niceMaterial;
+    [SerializeField] private GameObject ghostModel;
 
     public BallColor ghostColor;
 
@@ -12,5 +14,6 @@ public class TutorialGhost : MonoBehaviour
     {
         if (roomReference != null)
             roomReference.GhostHit();
+        ghostModel.GetComponent<SkinnedMeshRenderer>().material = niceMaterial;
     }
 }

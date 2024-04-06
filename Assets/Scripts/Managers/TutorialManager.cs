@@ -132,8 +132,9 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     // Next: Pick up Nice Balls
     private IEnumerator Flag1Event()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(1f);
         screen1.material = billboardMaterials[1];
+        HandleUpdateTutorialFlag(2);
     }
 
     // Start: <>
@@ -157,10 +158,10 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
 
         screen1.material = billboardMaterials[5];
         // Spawn the four ghosts
-        GameObject ghost1 = Instantiate(redGhost, firstRoomGhostSpawnTransforms[0].position, Quaternion.identity);
-        GameObject ghost2 = Instantiate(greenGhost, firstRoomGhostSpawnTransforms[1].position, Quaternion.identity);
-        GameObject ghost3 = Instantiate(yellowGhost, firstRoomGhostSpawnTransforms[2].position, Quaternion.identity);
-        GameObject ghost4 = Instantiate(purpleGhost, firstRoomGhostSpawnTransforms[2].position, Quaternion.identity);
+        GameObject ghost1 = Instantiate(redGhost, firstRoomGhostSpawnTransforms[0].position, firstRoomGhostSpawnTransforms[0].rotation);
+        GameObject ghost2 = Instantiate(greenGhost, firstRoomGhostSpawnTransforms[1].position, firstRoomGhostSpawnTransforms[1].rotation);
+        GameObject ghost3 = Instantiate(yellowGhost, firstRoomGhostSpawnTransforms[2].position, firstRoomGhostSpawnTransforms[2].rotation);
+        GameObject ghost4 = Instantiate(purpleGhost, firstRoomGhostSpawnTransforms[2].position, firstRoomGhostSpawnTransforms[2].rotation);
 
         ghost1.GetComponent<TutorialGhost>().roomReference = room1;
         ghost2.GetComponent<TutorialGhost>().roomReference = room1;

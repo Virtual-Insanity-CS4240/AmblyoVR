@@ -19624,7 +19624,7 @@ MonoBehaviour:
   particleSystems:
   - {fileID: 7556538515990677630}
   - {fileID: 3058114426406651999}
-  color: 0
+  color: 2
 --- !u!114 &6868355984911759138
 MonoBehaviour:
   m_ObjectHideFlags: 0
