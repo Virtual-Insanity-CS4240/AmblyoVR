@@ -36,6 +36,7 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     [Header("Second Shooting Range")]
     [SerializeField] private TutorialRoom room2;
     [SerializeField] private Transform[] secondRoomGhostSpawnTransforms;
+    [SerializeField] private GameObject[] actualGhostPrefabs;
 
     private bool inSecondShootingStage = false;
 
@@ -199,13 +200,13 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
         yield return new WaitForSeconds(5);
         SoundManager.Instance.PlayBattleMusic();
         // Spawn 3 ghosts
-        GameObject ghost1 = Instantiate(redGhost, secondRoomGhostSpawnTransforms[0].position, secondRoomGhostSpawnTransforms[0].rotation);
-        GameObject ghost2 = Instantiate(greenGhost, secondRoomGhostSpawnTransforms[1].position, secondRoomGhostSpawnTransforms[1].rotation);
-        GameObject ghost3 = Instantiate(yellowGhost, secondRoomGhostSpawnTransforms[2].position, secondRoomGhostSpawnTransforms[2].rotation);
+        GameObject ghost1 = Instantiate(actualGhostPrefabs[0], secondRoomGhostSpawnTransforms[0].position, secondRoomGhostSpawnTransforms[0].rotation);
+        GameObject ghost2 = Instantiate(actualGhostPrefabs[1], secondRoomGhostSpawnTransforms[1].position, secondRoomGhostSpawnTransforms[1].rotation);
+        GameObject ghost3 = Instantiate(actualGhostPrefabs[2], secondRoomGhostSpawnTransforms[2].position, secondRoomGhostSpawnTransforms[2].rotation);
 
-        ghost1.GetComponent<TutorialGhost>().roomReference = room2;
-        ghost2.GetComponent<TutorialGhost>().roomReference = room2;
-        ghost3.GetComponent<TutorialGhost>().roomReference = room2;
+        ghost1.GetComponent<GhostMovement>().tutRoomReference = room2;
+        ghost2.GetComponent<GhostMovement>().tutRoomReference = room2;
+        ghost3.GetComponent< GhostMovement>().tutRoomReference = room2;
     }
 
     // Start: <>

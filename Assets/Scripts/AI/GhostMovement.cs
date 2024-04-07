@@ -27,6 +27,7 @@ public class GhostMovement : MonoBehaviour
 
     public BallColor ghostColor;
     public Room roomReference;
+    public TutorialRoom tutRoomReference;
 
     void Start()
     {
@@ -112,6 +113,9 @@ public class GhostMovement : MonoBehaviour
 
     public void GhostHit()
     {
-        roomReference.GhostHit();
+        if (tutRoomReference != null)
+            tutRoomReference.GhostHit();
+        else
+            roomReference.GhostHit();
     }
 }
