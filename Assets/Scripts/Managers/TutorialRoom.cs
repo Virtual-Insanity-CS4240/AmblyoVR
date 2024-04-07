@@ -25,7 +25,8 @@ public class TutorialRoom : MonoBehaviour
             else
             {
                 // Instantiate Boss in Room
-                Instantiate(bossPrefab, bossSpawnPosition.position, bossSpawnPosition.rotation);
+                GameObject bossGhost = Instantiate(bossPrefab, bossSpawnPosition.position, bossSpawnPosition.rotation);
+                bossGhost.transform.localScale = Vector3.one * 2;
                 TutorialManager.UpdateTutorialFlag(6);
                 SoundManager.Instance.PlayBossFightMusic();
             }
