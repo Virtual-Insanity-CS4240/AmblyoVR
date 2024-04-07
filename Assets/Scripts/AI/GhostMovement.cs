@@ -25,6 +25,8 @@ public class GhostMovement : MonoBehaviour
     private float timer = 0f;
     private bool isWalking = true;
 
+    public float edgeDetectionDistance = 0.5f;
+
     public BallColor ghostColor;
     public Room roomReference;
     public TutorialRoom tutRoomReference;
@@ -37,6 +39,20 @@ public class GhostMovement : MonoBehaviour
 
     void Update()
     {
+        if (agent.isActiveAndEnabled && agent.hasPath)
+        {
+            Vector3 currentPos = agent.transform.position;
+            NavMeshHit hit;
+            if (!NavMesh.Raycast(currentPos, agent.destination, out hit, NavMesh.AllAreas))
+            {
+                float distanceToEdge = Vector3.Distance(currentPos, hit.position);
+                if (distanceToEdge < edgeDetectionDistance)
+                {
+                    HandleEdgeDetected();
+                }
+            }
+        }
+        
         if (Vector3.Distance(transform.position, player.position) <= detectionRadius)
         {
             isRunningAway = true;
@@ -89,15 +105,15 @@ public class GhostMovement : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            HandleWallCollision(collision);
-        }
-    }
+    // void OnCollisionEnter(Collision collision)
+    // {
+    //     if (collision.gameObject.CompareTag("Wall"))
+    //     {
+    //         HandleWallCollision(collision);
+    //     }
+    // }
 
-    void HandleWallCollision(Collision collision)
+    void HandleEdgeDetected()
     {
         agent.speed = teleportingSpeed;
         Vector3 directionToPlayer = player.position - transform.position; 
