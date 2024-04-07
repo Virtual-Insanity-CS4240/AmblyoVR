@@ -1,7 +1,6 @@
 /*
 Requires NavMeshAgent, Collider, Rigidbody on Boss
 Bake walkable area for NavMesh
-Tag room walls with "Wall" to allow collision
 */
 
 using System.Collections;
@@ -23,6 +22,8 @@ public class BossMovement : MonoBehaviour
     private float timer = 0f;
     private bool isWalking = true;
     private bool isTeleporting = false;
+    
+    public float edgeDetectionDistance = 0.5f;
 
     void Start()
     {
@@ -32,6 +33,20 @@ public class BossMovement : MonoBehaviour
 
     void Update()
     {
+        if (agent.isActiveAndEnabled && agent.hasPath)
+        {
+            Vector3 currentPos = agent.transform.position;
+            NavMeshHit hit;
+            if (!NavMesh.Raycast(currentPos, agent.destination, out hit, NavMesh.AllAreas))
+            {
+                float distanceToEdge = Vector3.Distance(currentPos, hit.position);
+                if (distanceToEdge < edgeDetectionDistance)
+                {
+                    HandleEdgeDetected();
+                }
+            }
+        }
+        
         if (Vector3.Distance(transform.position, player.position) <= detectionRadius)
         {
             isTeleporting = true;
@@ -89,15 +104,15 @@ public class BossMovement : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            HandleWallCollision(collision);
-        }
-    }
+    // void OnCollisionEnter(Collision collision)
+    // {
+    //     if (collision.gameObject.CompareTag("Wall"))
+    //     {
+    //         HandleWallCollision(collision);
+    //     }
+    // }
 
-    void HandleWallCollision(Collision collision)
+    void HandleEdgeDetected()
     {
         Vector3 directionToPlayer = player.position - transform.position; 
         directionToPlayer.Normalize();
@@ -108,6 +123,6 @@ public class BossMovement : MonoBehaviour
         Vector3 finalPosition = hit.position;
         agent.transform.position = finalPosition;
         agent.speed = teleportingSpeed;
-        Debug.Log("Collided with wall");
+        Debug.Log("Reached edge of NavMesh");
     }
 }
