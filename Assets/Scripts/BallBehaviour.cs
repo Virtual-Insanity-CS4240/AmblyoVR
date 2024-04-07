@@ -6,10 +6,18 @@ public class BallBehaviour : MonoBehaviour
     public ParticleSystem[] particleSystems;
     public BallColor color;
 
+    private bool hasHit = false;
+
 
     // TODO after HOTO: Probably make this an interface to prevent DRY
     public void OnCollisionEnter(Collision other)
     {
+        if (!hasHit)
+        {
+            hasHit = true;
+            SoundManager.Instance.PlayBallLandingSound();
+        }
+
         if (other.gameObject.CompareTag("Ghost"))
         {
             GhostMovement ghostMovement = other.gameObject.GetComponent<GhostMovement>();

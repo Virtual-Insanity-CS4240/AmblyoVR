@@ -53,6 +53,7 @@ public class DoorManager : MonoBehaviour
         {
             animator.SetInteger("State", isOtherWay ? (int)DoorAnimations.DoorOpenOther : (int)DoorAnimations.DoorOpen);
             doorOpen = true;
+            SoundManager.Instance.PlayDoorOpeningSound();
         }
     }
 
@@ -62,6 +63,7 @@ public class DoorManager : MonoBehaviour
         {
             animator.SetInteger("State", isOtherWay ? (int)DoorAnimations.DoorCloseOther : (int)DoorAnimations.DoorClose);
             doorOpen = false;
+            SoundManager.Instance.PlayDoorOpeningSound();
         }
     }
 

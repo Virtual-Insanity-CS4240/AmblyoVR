@@ -35,6 +35,7 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
 
     [Header("Second Shooting Range")]
     [SerializeField] private TutorialRoom room2;
+    [SerializeField] private Transform[] secondRoomGhostSpawnTransforms;
 
     private bool inSecondShootingStage = false;
 
@@ -127,7 +128,7 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     private IEnumerator Flag0Event()
     {
         screen1.material = billboardMaterials[0];
-        TutorialRoom.isFirstRoom = true;
+        room1.isFirstRoom = true;
         yield return new WaitForSeconds(3);
         HandleUpdateTutorialFlag(1);
     }
@@ -162,6 +163,8 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
 
         screen1.material = billboardMaterials[5];
         // Spawn the four ghosts
+        SoundManager.Instance.PlayBattleMusic();
+
         GameObject ghost1 = Instantiate(redGhost, firstRoomGhostSpawnTransforms[0].position, firstRoomGhostSpawnTransforms[0].rotation);
         GameObject ghost2 = Instantiate(greenGhost, firstRoomGhostSpawnTransforms[1].position, firstRoomGhostSpawnTransforms[1].rotation);
         GameObject ghost3 = Instantiate(yellowGhost, firstRoomGhostSpawnTransforms[2].position, firstRoomGhostSpawnTransforms[2].rotation);
@@ -177,6 +180,7 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     // Next: Walk to second shooting range
     private IEnumerator Flag4Event()
     {
+        SoundManager.Instance.PlayCasualMusic();
         screen1.material = billboardMaterials[6];
         yield return new WaitForSeconds(5);
         // Open door to second range
@@ -188,13 +192,24 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     // Next: Kill all the ghosts
     private IEnumerator Flag5Event()
     {
+        room2.isFirstRoom = false;
         screen1.material = billboardMaterials[0]; // Reset billboard
         inSecondShootingStage = true;
         screen2.material = billboardMaterials[7];
         yield return new WaitForSeconds(5);
-        // TODO: Spawn 3 ghosts
+        SoundManager.Instance.PlayBattleMusic();
+        // Spawn 3 ghosts
+        GameObject ghost1 = Instantiate(redGhost, secondRoomGhostSpawnTransforms[0].position, secondRoomGhostSpawnTransforms[0].rotation);
+        GameObject ghost2 = Instantiate(greenGhost, secondRoomGhostSpawnTransforms[1].position, secondRoomGhostSpawnTransforms[1].rotation);
+        GameObject ghost3 = Instantiate(yellowGhost, secondRoomGhostSpawnTransforms[2].position, secondRoomGhostSpawnTransforms[2].rotation);
+
+        ghost1.GetComponent<TutorialGhost>().roomReference = room2;
+        ghost2.GetComponent<TutorialGhost>().roomReference = room2;
+        ghost3.GetComponent<TutorialGhost>().roomReference = room2;
     }
 
+    // Start: <>
+    // Next: <>
     private IEnumerator Flag6Event()
     {
         // TODO: Change to spooky room lighting
@@ -204,6 +219,8 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
         screen2.material = billboardMaterials[9];
     }
 
+    // Start: Kill Boss
+    // Next: <>
     private IEnumerator Flag7Event()
     {
         inSecondShootingStage = false;

@@ -21,6 +21,8 @@ public class Room : MonoBehaviour
             if (isBossRoom)
             {
                 // Instantiate Boss in Room if have, turn light spookier
+                SoundManager.Instance.PlayWarningSound();
+                SoundManager.Instance.PlayBossFightMusic();
             }
             else
             {
@@ -32,5 +34,6 @@ public class Room : MonoBehaviour
     public void BossDied()
     {
         // TODO: Remove spooky light from the room
+        SoundManager.Instance.PlayCasualMusic();
     }
 }

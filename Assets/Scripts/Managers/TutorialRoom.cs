@@ -5,8 +5,10 @@ using UnityEngine;
 public class TutorialRoom : MonoBehaviour
 {
     [SerializeField] private int totalGhosts;
+    [SerializeField] private Transform bossSpawnPosition;
+    [SerializeField] private GameObject bossPrefab;
     private int niceGhostCount = 0;
-    public static bool isFirstRoom;
+    public bool isFirstRoom;
 
     public void GhostHit()
     {
@@ -23,8 +25,15 @@ public class TutorialRoom : MonoBehaviour
             else
             {
                 // Instantiate Boss in Room
-
+                Instantiate(bossPrefab, bossSpawnPosition.position, bossSpawnPosition.rotation);
+                TutorialManager.UpdateTutorialFlag(6);
+                SoundManager.Instance.PlayBossFightMusic();
             }
         }
+    }
+
+    public void BossDone()
+    {
+        SoundManager.Instance.PlayCasualMusic();
     }
 }

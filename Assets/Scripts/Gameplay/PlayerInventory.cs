@@ -55,5 +55,6 @@ public class PlayerInventory : SimpleSingleton<PlayerInventory>
     private void HandleBallColorChange(BallColor color)
     {
         equippedBallColor = color;
+        SoundManager.Instance.PlayBallChangingSound();
     }
 }

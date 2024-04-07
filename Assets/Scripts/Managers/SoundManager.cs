@@ -21,31 +21,50 @@ public class SoundManager : SimpleSingleton<SoundManager>
     public AudioClip ballLanding;
     public AudioClip ballThrowing;
     public AudioClip doorOpening;
+    public AudioClip doorClosing;
     public AudioClip hit;
     public AudioClip poof;
     public AudioClip sneeze;
     public AudioClip warning;
 
-    //public AudioClip[] audioClips;
+    private float timer = 0f;
+    private bool isInMusicSequence = false;
+    private AudioClip secondPart = null;
+
+    private void Update()
+    {
+        if (isInMusicSequence)
+        {
+            if (timer > 0f)
+            {
+                timer -= Time.deltaTime;
+            }
+            else
+            {
+                isInMusicSequence = false;
+                PlayerBGMLoop();
+            }
+        }
+    }
 
     protected override void HandleAwake()
     {
         base.HandleAwake();
     }
 
-    void playBossFightMusic()
-    {
-        StartCoroutine(PlayBGMSequence(bgmBossFightCleanIntro, bgmBossFightLoop));
+    public void PlayBossFightMusic()
+    {                
+        PlayBGMSequence(bgmBossFightCleanIntro, bgmBossFightLoop);
     }
 
-    void playBattleMusic()
+    public void PlayBattleMusic()
     {
-        StartCoroutine(PlayBGMSequence(bgmBattleCleanIntro, bgmBattleLoop));
+        PlayBGMSequence(bgmBattleCleanIntro, bgmBattleLoop);
     }
 
-    void playCasualMusic()
+    public void PlayCasualMusic()
     {
-        StartCoroutine(PlayBGMSequence(bgmCasualCleanIntro, bgmCasualLoop));
+        PlayBGMSequence(bgmCasualCleanIntro, bgmCasualLoop);
     }
 
     public void PlayBallChangingSound()
@@ -68,6 +87,11 @@ public class SoundManager : SimpleSingleton<SoundManager>
         SFXSource.PlayOneShot(doorOpening);
     }
 
+    public void PlayDoorClosingSound()
+    {
+        SFXSource.PlayOneShot(doorClosing);
+    }
+
     public void PlayHitSound()
     {
         SFXSource.PlayOneShot(hit);
@@ -86,35 +110,29 @@ public class SoundManager : SimpleSingleton<SoundManager>
     public void PlayWarningSound()
     {
         SFXSource.PlayOneShot(warning);
-    }
+    }    
 
-    //void playSound(string sound)
-    //{
-    //    AudioClip audioClip = Array.Find(audioClips, x => x.name == sound);
-
-    //    if (audioClip == null)
-    //    {
-    //        Debug.Log("Sound Not Found");
-    //    } 
-
-    //    else
-    //    {
-    //        SFXSource.PlayOneShot(audioClip);
-    //    }
-    //}
-
-    private IEnumerator PlayBGMSequence(AudioClip bgm1, AudioClip bgm2)
+    private void PlayBGMSequence(AudioClip bgm1, AudioClip bgm2)
     {
+        musicSource.Stop();
+
+        secondPart = bgm2;
+
         // Play bgm1 once
         musicSource.clip = bgm1;
         musicSource.loop = false;
         musicSource.Play();
 
         // Wait for bgm1 to finish
-        yield return new WaitForSeconds(bgm1.length);
+        timer = bgm1.length;
+        isInMusicSequence = true;
+    }
 
-        // Then switch to bgm2 and loop
-        musicSource.clip = bgm2;
+    private void PlayerBGMLoop()
+    {
+        if (secondPart == null)
+            Debug.LogError("No Second Part of BGM Found!");
+        musicSource.clip = secondPart;
         musicSource.loop = true;
         musicSource.Play();
     }
