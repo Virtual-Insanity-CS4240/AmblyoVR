@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum BallColor
 {
-    Red = 0, Green = 1, Purple = 2, Yellow = 3
+    Red = 0, Green = 1, Purple = 2, Yellow = 3, White = 4
 }
 
 public class PlayerInventory : SimpleSingleton<PlayerInventory>

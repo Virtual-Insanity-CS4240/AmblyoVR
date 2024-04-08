@@ -140,5 +140,6 @@ public class GhostMovement : MonoBehaviour
         else if (roomReference != null)
             roomReference.GhostHit();
         ghostModel.GetComponent<SkinnedMeshRenderer>().material = niceMaterial;
+        ghostColor = BallColor.White;
     }
 }

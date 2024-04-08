@@ -94,13 +94,26 @@ public class BallBehaviour : MonoBehaviour
         {
             hasHit = true;
             SoundManager.Instance.PlayBallLandingSound();
-            StartCoroutine(DestroyBall(0.5f));
+            StartCoroutine(DestroyBallGround(0.5f));
         }
     }
 
     public IEnumerator DestroyBall(float time)
     {
-        GetComponent<Rigidbody>().useGravity = false;
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        GetComponent<Collider>().isTrigger = true;
+        yield return new WaitForSeconds(time);
+        if (isDisappear)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public IEnumerator DestroyBallGround(float time)
+    {
         yield return new WaitForSeconds(time);
         if (isDisappear)
         {

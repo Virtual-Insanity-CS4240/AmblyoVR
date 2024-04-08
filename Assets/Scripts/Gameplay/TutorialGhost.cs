@@ -15,5 +15,6 @@ public class TutorialGhost : MonoBehaviour
         if (roomReference != null)
             roomReference.GhostHit();
         ghostModel.GetComponent<SkinnedMeshRenderer>().material = niceMaterial;
+        ghostColor = BallColor.White;
     }
 }

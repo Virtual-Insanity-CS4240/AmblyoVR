@@ -352,10 +352,10 @@ MonoBehaviour:
   throwThreshold: 1
   totalTrackedPositions: 25
   positionsBeforeRelease: 15
-  rotationsBeforeRelease: 10
-  throwStrength: 10
+  rotationsBeforeRelease: 15
+  throwStrength: 20
   rotationStrength: 0.1
-  curveStrength: 0.5
+  curveStrength: 1.6
 --- !u!1 &1310953745576385880
 GameObject:
   m_ObjectHideFlags: 0

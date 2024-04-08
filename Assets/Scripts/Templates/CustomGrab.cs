@@ -279,7 +279,8 @@ public class CustomGrab : MonoBehaviour
             rb.AddTorque(torque * rotationStrength, ForceMode.Impulse);
             if (currGrabbedObject.CompareTag("Ball"))
             {
-                currGrabbedObject.GetComponent<BallBehaviour>().curveDirection = Quaternion.AngleAxis(90, velocity) * torque * rotationStrength * strength * curveStrength;
+                Vector3 curveDirection = Quaternion.AngleAxis(90, velocity) * torque * rotationStrength * strength * curveStrength;
+                currGrabbedObject.GetComponent<BallBehaviour>().curveDirection = new Vector3(curveDirection.x, curveDirection.y * 0.1f, curveDirection.z);
                 Debug.Log("curveDirection:" + currGrabbedObject.GetComponent<BallBehaviour>().curveDirection);
                 // rb.AddForce(currGrabbedObject.GetComponent<BallBehaviour>().curveDirection, ForceMode.Force);
             }

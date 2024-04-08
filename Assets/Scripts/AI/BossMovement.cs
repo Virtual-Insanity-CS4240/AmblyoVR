@@ -141,6 +141,7 @@ public class BossMovement : MonoBehaviour
         if (bossHits <= 0)
         {
             ghostModel.GetComponent<SkinnedMeshRenderer>().material = niceMaterial;
+            ghostColor = BallColor.White;
             if (tutRoomReference != null)
                 tutRoomReference.BossDone();
         }
