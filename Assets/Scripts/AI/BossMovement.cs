@@ -8,8 +8,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Rigidbody))]
 public class BossMovement : MonoBehaviour
 {
+    [SerializeField] private Material niceMaterial;
+    [SerializeField] private GameObject ghostModel;
+    [SerializeField] private int bossHits = 5;
     public float walkSpeed = 0.5f;
     private float teleportingSpeed = 0f;
     public float detectionRadius = 5f;
@@ -24,6 +30,9 @@ public class BossMovement : MonoBehaviour
     private bool isTeleporting = false;
     
     public float edgeDetectionDistance = 0.5f;
+    public BallColor ghostColor;
+    public Room roomReference;
+    public TutorialRoom tutRoomReference;
 
     void Start()
     {
@@ -124,5 +133,17 @@ public class BossMovement : MonoBehaviour
         agent.transform.position = finalPosition;
         agent.speed = teleportingSpeed;
         Debug.Log("Reached edge of NavMesh");
+    }
+
+    public void GhostHit()
+    {
+        bossHits--;
+        if (bossHits <= 0)
+        {
+            ghostModel.GetComponent<SkinnedMeshRenderer>().material = niceMaterial;
+            if (tutRoomReference != null)
+                tutRoomReference.BossDone();
+        }
+        
     }
 }

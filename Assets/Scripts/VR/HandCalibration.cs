@@ -13,7 +13,6 @@ public class HandCalibration : MonoBehaviour
     [SerializeField] private GameObject rightHand;
     [SerializeField] private GameObject plane;
     [SerializeField] private GameObject pouch;
-    [SerializeField] private float pouchOffsetY = 0.3f;
     private enum CalibrationState { None, Hand, Pouch};
     private bool isAHold = false;
     private bool isAReleased = true;
@@ -67,10 +66,8 @@ public class HandCalibration : MonoBehaviour
         if (BbuttonValue == 1 && isBHold)
         {   
             Debug.Log("B pressed");
-            Vector3 midPoint = (leftHand.transform.position + rightHand.transform.position) / 2;
             float lowPointY = Mathf.Min(leftHand.transform.position.y, rightHand.transform.position.y);
-            pouch.transform.position = midPoint;
-            pouch.transform.localPosition = new Vector3(0, lowPointY - pouchOffsetY, 0);
+            pouch.transform.position = new Vector3(pouch.transform.position.x, lowPointY, pouch.transform.position.z);
             // PouchManager pouchManager = pouch.GetComponent<PouchManager>();
             // pouchManager.SetDistanceFromHead(Camera.main.transform.position.y - pouch.transform.position.y);
             // Debug.Log("Pouch Calibrated");

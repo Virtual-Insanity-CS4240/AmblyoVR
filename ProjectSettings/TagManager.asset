@@ -12,6 +12,8 @@ TagManager:
   - TutorialGhost
   - Pouch
   - Cache
+  - Boss
+  - Ball
   layers:
   - Default
   - TransparentFX

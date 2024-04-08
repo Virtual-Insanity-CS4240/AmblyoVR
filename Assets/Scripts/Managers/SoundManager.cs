@@ -26,6 +26,7 @@ public class SoundManager : SimpleSingleton<SoundManager>
     public AudioClip poof;
     public AudioClip sneeze;
     public AudioClip warning;
+    public AudioClip stepping;
 
     private float timer = 0f;
     private bool isInMusicSequence = false;
@@ -99,7 +100,7 @@ public class SoundManager : SimpleSingleton<SoundManager>
 
     public void PlayPoofSound()
     {
-        SFXSource.PlayOneShot(poof);
+        SFXSource.PlayOneShot(poof, 2);
     }
 
     public void PlaySneezeSound()
@@ -110,7 +111,12 @@ public class SoundManager : SimpleSingleton<SoundManager>
     public void PlayWarningSound()
     {
         SFXSource.PlayOneShot(warning);
-    }    
+    }
+
+    public void PlaySteppingSound()
+    {
+        SFXSource.PlayOneShot(stepping, 0.3f);
+    }
 
     private void PlayBGMSequence(AudioClip bgm1, AudioClip bgm2)
     {

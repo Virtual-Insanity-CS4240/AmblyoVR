@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2730873536968572857}
   m_Layer: 6
   m_Name: ball_green
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,7 +51,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!135 &230678236486938182
 SphereCollider:
@@ -82,6 +82,8 @@ MonoBehaviour:
   - {fileID: 1508269691377633067}
   - {fileID: 3408963823187269603}
   color: 1
+  curveDirection: {x: 0, y: 0, z: 0}
+  isDisappear: 1
 --- !u!114 &2730873536968572857
 MonoBehaviour:
   m_ObjectHideFlags: 0

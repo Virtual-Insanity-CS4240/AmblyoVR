@@ -25,8 +25,13 @@ public class TutorialRoom : MonoBehaviour
             else
             {
                 // Instantiate Boss in Room
+                foreach(GameObject ghost in GameObject.FindGameObjectsWithTag("Ghost"))
+                {
+                    Destroy(ghost);
+                }
                 GameObject bossGhost = Instantiate(bossPrefab, bossSpawnPosition.position, bossSpawnPosition.rotation);
-                bossGhost.transform.localScale = Vector3.one * 2;
+                bossGhost.transform.localScale = Vector3.one * 1.5f;
+                bossGhost.GetComponent<BossMovement>().tutRoomReference = this;
                 TutorialManager.UpdateTutorialFlag(6);
                 SoundManager.Instance.PlayBossFightMusic();
             }
@@ -36,5 +41,6 @@ public class TutorialRoom : MonoBehaviour
     public void BossDone()
     {
         SoundManager.Instance.PlayCasualMusic();
+        TutorialManager.UpdateTutorialFlag(7);
     }
 }

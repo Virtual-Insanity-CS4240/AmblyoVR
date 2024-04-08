@@ -9,8 +9,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Rigidbody))]
 public class GhostMovement : MonoBehaviour
 {
+    
+    [SerializeField] private Material niceMaterial;
+    [SerializeField] private GameObject ghostModel;
     public float walkSpeed = 1.5f;
     public float runSpeed = 3f;
     public float detectionRadius = 5f;
@@ -131,7 +137,8 @@ public class GhostMovement : MonoBehaviour
     {
         if (tutRoomReference != null)
             tutRoomReference.GhostHit();
-        else
+        else if (roomReference != null)
             roomReference.GhostHit();
+        ghostModel.GetComponent<SkinnedMeshRenderer>().material = niceMaterial;
     }
 }

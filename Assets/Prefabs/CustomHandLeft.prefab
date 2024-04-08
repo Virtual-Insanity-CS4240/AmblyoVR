@@ -1323,7 +1323,13 @@ MonoBehaviour:
   - {fileID: 1007344449044062391, guid: 3c3887a8e04bc4b499888a38ec9f1349, type: 3}
   - {fileID: 3419224627125710525, guid: dfefbe830b2997142ba281f104d64325, type: 3}
   - {fileID: 2534763831118991305, guid: 976d8aae5c7a3294ca291b86fe33131b, type: 3}
-  otherHand: {fileID: 0}
+  throwThreshold: 1
+  totalTrackedPositions: 25
+  positionsBeforeRelease: 15
+  rotationsBeforeRelease: 10
+  throwStrength: 10
+  rotationStrength: 0.1
+  curveStrength: 0.4
 --- !u!120 &996192815786874484
 LineRenderer:
   m_ObjectHideFlags: 0

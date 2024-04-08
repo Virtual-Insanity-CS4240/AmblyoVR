@@ -70,6 +70,11 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
         EndTutorial -= HandleEndTutorial;
     }
 
+    private void Start()
+    {
+        PlayerInventory.ballCount = 0;
+    }
+
     private void Update()
     {
         if (inSecondShootingStage)
@@ -187,6 +192,8 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
         // Open door to second range
         room2Door1.OpenDoor();
         room2Door2.OpenDoor();
+        room2Door1.UnlockDoor();
+        room2Door2.UnlockDoor();
     }
 
     // Start: <>
@@ -197,6 +204,7 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
         screen1.material = billboardMaterials[0]; // Reset billboard
         inSecondShootingStage = true;
         screen2.material = billboardMaterials[7];
+        Debug.Log("Flag 5 event");
         yield return new WaitForSeconds(5);
         SoundManager.Instance.PlayBattleMusic();
         // Spawn 3 ghosts
@@ -214,6 +222,7 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
     private IEnumerator Flag6Event()
     {
         // TODO: Change to spooky room lighting
+        Debug.Log("Flag 6 event");
         yield return new WaitForSeconds(3);
         screen2.material = billboardMaterials[8];
         yield return new WaitForSeconds(5);
@@ -229,6 +238,7 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
         yield return new WaitForSeconds(5);
         // Door opens
         room3Door.OpenDoor();
+        room3Door.UnlockDoor();
         screen2.material = billboardMaterials[11];
     }
 

@@ -11,7 +11,7 @@ public enum BallColor
 public class PlayerInventory : SimpleSingleton<PlayerInventory>
 {
     public static BallColor equippedBallColor = BallColor.Red;
-    public static int ballCount = 0;
+    public static int ballCount = 9999;
     public static int maxBallCount = 20;
 
     public static BallColorReturnEvent EquipBall;

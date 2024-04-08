@@ -9,6 +9,7 @@ public class DoorManager : MonoBehaviour
     [SerializeField] private bool isOtherWay = false;
     [SerializeField] private Animator animator;
     [SerializeField] private bool isLocked = false;
+    [SerializeField] private DoorManager connectedDoor;
     private List<string> animations = new List<string>();
     private enum DoorAnimations { DoorOpen = 0, DoorClose = 1, DoorOpenOther = 2, DoorCloseOther = 3 }
     private bool doorOpen = false;
@@ -23,13 +24,11 @@ public class DoorManager : MonoBehaviour
     {
         if (isEntered && !doorOpen && !isLocked && !(oneWayDoor && isOtherWay))
         {
-            animator.SetInteger("State", (int)DoorAnimations.DoorOpen);
-            doorOpen = true;
+            OpenDoor();
         }
         else if (!isEntered && doorOpen && (!oneWayDoor || isOtherWay))
         {
-            animator.SetInteger("State", (int)DoorAnimations.DoorCloseOther);
-            doorOpen = false;
+            CloseDoor();
         }
     }
     
@@ -37,13 +36,11 @@ public class DoorManager : MonoBehaviour
     {
         if (isEntered && !doorOpen && !isLocked && !(oneWayDoor && !isOtherWay))
         {
-            animator.SetInteger("State", (int)DoorAnimations.DoorOpenOther);
-            doorOpen = true;
+            OpenDoor();
         }
         else if (!isEntered && doorOpen && (!oneWayDoor || !isOtherWay))
         {
-            animator.SetInteger("State", (int)DoorAnimations.DoorClose);
-            doorOpen = false;
+            CloseDoor();
         }
     }
 
@@ -54,6 +51,10 @@ public class DoorManager : MonoBehaviour
             animator.SetInteger("State", isOtherWay ? (int)DoorAnimations.DoorOpenOther : (int)DoorAnimations.DoorOpen);
             doorOpen = true;
             SoundManager.Instance.PlayDoorOpeningSound();
+            if (connectedDoor != null)
+            {
+                connectedDoor.OpenDoor();
+            }
         }
     }
 
@@ -64,6 +65,10 @@ public class DoorManager : MonoBehaviour
             animator.SetInteger("State", isOtherWay ? (int)DoorAnimations.DoorCloseOther : (int)DoorAnimations.DoorClose);
             doorOpen = false;
             SoundManager.Instance.PlayDoorOpeningSound();
+            if (connectedDoor != null)
+            {
+                connectedDoor.CloseDoor();
+            }
         }
     }
 
