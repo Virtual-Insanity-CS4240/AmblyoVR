@@ -1,28 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PouchManager : MonoBehaviour
 {
-    [SerializeField] private float distanceFromHead = 1f;
-    private CharacterController characterController;
-    private Vector3 initialOffset;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float handPouchPositionOffset = 0.05f;
+    [SerializeField] private GameObject ball1;
+    [SerializeField] private GameObject ball2;
+    public void SetPosition(Vector3 leftHand, Vector3 rightHand)
     {
-        characterController = GameObject.FindWithTag("Player").GetComponent<CharacterController>();
-        initialOffset = characterController.center;
+        float lowPointY = Mathf.Min(leftHand.y, rightHand.y);
+        transform.position = new Vector3(transform.position.x, lowPointY - handPouchPositionOffset, transform.position.z);
     }
-
-    // Update is called once per frame
-    void Update()
+    public void SetScale(Vector3 leftHand, Vector3 rightHand)
     {
-        Vector3 offset = characterController.center - initialOffset;
-        transform.localPosition += offset;
-    }
-
-    public void SetDistanceFromHead(float distance)
-    {
-        distanceFromHead = distance;
+        ball1.transform.parent = null;
+        ball2.transform.parent = null;
+        float distance = Math.Abs(leftHand.x - rightHand.x);
+        Debug.Log("Distance: " + distance);
+        transform.localScale = new Vector3(distance * 2, transform.localScale.y, transform.localScale.z);
+        ball1.transform.parent = transform;
+        ball2.transform.parent = transform;
     }
 }

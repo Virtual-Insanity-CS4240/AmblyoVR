@@ -1317,6 +1317,7 @@ MonoBehaviour:
   hands:
   - {fileID: 8082664249579891213}
   - {fileID: 0}
+  handAnimator: {fileID: 8177673188352247375}
   colorIndex: 0
   ballPrefabs:
   - {fileID: 2845889871990366237, guid: d17b24f1cc90a6441acded5243708f72, type: 3}

@@ -14,6 +14,7 @@ public class CustomGrab : MonoBehaviour
     [SerializeField] private GameObject attachAchor;
     [SerializeField] private InputActionProperty changeColor;
     [SerializeField] private GameObject[] hands;
+    [SerializeField] private Animator handAnimator;
     [SerializeField] private int colorIndex = 0;
     [SerializeField] private GameObject[] ballPrefabs;
     [SerializeField] private float throwThreshold = 1f;
@@ -78,6 +79,17 @@ public class CustomGrab : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (Input.GetAxis(grabButtonName) > 0.1f)
+        {
+            handAnimator.SetInteger("Pose", 0);
+            handAnimator.SetFloat("Pinch", 0.03f);
+
+        }
+        else
+        {
+            handAnimator.SetInteger("Pose", 3);
+            handAnimator.SetFloat("Pinch", 0);
+        }
         // if you hold button
         if (!isGrabbing && Input.GetAxis(grabButtonName) == 1)
         {

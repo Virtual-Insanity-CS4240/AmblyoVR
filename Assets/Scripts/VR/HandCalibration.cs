@@ -14,13 +14,22 @@ public class HandCalibration : MonoBehaviour
     [SerializeField] private float timeBPressed = 1.0f;
     [SerializeField] private GameObject leftHand;
     [SerializeField] private GameObject rightHand;
+    [SerializeField] private GameObject leftController;
+    [SerializeField] private GameObject rightController;
+    [SerializeField] private GameObject planeLeftHand;
+    [SerializeField] private SkinnedMeshRenderer planeLeftHandMesh;
+    [SerializeField] private GameObject planeRightHand;
+    [SerializeField] private SkinnedMeshRenderer planeRightHandMesh;
     [SerializeField] private GameObject plane;
+    [SerializeField] private GameObject pouchLeftBall;
+    [SerializeField] private GameObject pouchRightBall;
     [SerializeField] private GameObject pouch;
     [SerializeField] private GameObject eyeObject;
     private enum CalibrationState { None, Hand, Run, Pouch, Grab, Eyes};
     private GameObject player;
     private bool isAHold = false;
     private bool isAReleased = true;
+    private bool playHandAnimation = false;
     private bool isBHold = false;
     private bool isBReleased = true;
     [SerializeField] private Text calibrationText;
@@ -31,7 +40,8 @@ This is the Calibration Scene.
 
 Firstly, put both of your hands in front of you and hold the 'A' button.",
 @"Great! This is your running position.
-You can move your hands alternately up and down near this position to move forward.
+You can move your hands alternately up and down near this position to move forward
+in the direction you are facing.
 
 Push the left joystick down while running to move backwards instead.
 
@@ -60,6 +70,12 @@ After you are done, you will be teleported to the tutorial scene."
         {
             eyeObject.SetActive(false);
         }
+        planeLeftHand.SetActive(false);
+        planeRightHand.SetActive(false);
+        planeLeftHandMesh.material.SetColor("_ColorTop", Color.white);
+        planeRightHandMesh.material.SetColor("_ColorTop", Color.white);
+        pouchLeftBall.SetActive(false);
+        pouchRightBall.SetActive(false);
         // Vector3 midPoint = (leftHand.transform.position + rightHand.transform.position) / 2;
         // BodyManager planeManager = plane.GetComponent<BodyManager>();
         // planeManager.SetOffsetFromCenter(midPoint);
@@ -84,6 +100,15 @@ After you are done, you will be teleported to the tutorial scene."
         if (AbuttonValue == 1 && isAHold)
         {   
             Debug.Log("A pressed");
+            planeLeftHand.SetActive(true);
+            planeRightHand.SetActive(true);
+            planeLeftHand.transform.position = leftController.transform.position;
+            planeRightHand.transform.position = rightController.transform.position;
+            planeLeftHandMesh.material.SetFloat("_Opacity", 0.6f);
+            planeRightHandMesh.material.SetFloat("_Opacity", 0.6f);
+            planeLeftHandMesh.material.SetFloat("_OutlineOpacity", 0.4f);
+            planeRightHandMesh.material.SetFloat("_OutlineOpacity", 0.4f);
+            StartCoroutine(HandAnimation());
             Vector3 midPoint = (leftHand.transform.position + rightHand.transform.position) / 2;
             BodyManager planeManager = plane.GetComponent<BodyManager>();
             planeManager.SetOffsetFromCenter(midPoint);
@@ -110,10 +135,18 @@ After you are done, you will be teleported to the tutorial scene."
         if (BbuttonValue == 1 && isBHold)
         {   
             Debug.Log("B pressed");
-            float lowPointY = Mathf.Min(leftHand.transform.position.y, rightHand.transform.position.y);
-            pouch.transform.position = new Vector3(pouch.transform.position.x, lowPointY, pouch.transform.position.z);
-            // PouchManager pouchManager = pouch.GetComponent<PouchManager>();
-            // pouchManager.SetDistanceFromHead(Camera.main.transform.position.y - pouch.transform.position.y);
+            PouchManager pouchManager = pouch.GetComponent<PouchManager>();
+            pouchLeftBall.SetActive(true);
+            pouchRightBall.SetActive(true);
+            pouchManager.SetPosition(leftHand.transform.position, rightHand.transform.position);
+            pouchManager.SetScale(leftHand.transform.position, rightHand.transform.position);
+            pouchLeftBall.transform.position = leftController.transform.position + new Vector3(0.16f, 0, 0);
+            pouchRightBall.transform.position = rightController.transform.position + new Vector3(0.16f, 0, 0);
+            Material leftBallMaterial = pouchLeftBall.GetComponent<MeshRenderer>().material;
+            Material rightBallMaterial = pouchRightBall.GetComponent<MeshRenderer>().material;
+            leftBallMaterial.color = new Color(leftBallMaterial.color.r, leftBallMaterial.color.g, leftBallMaterial.color.b, 0.6f);
+            rightBallMaterial.color = new Color(rightBallMaterial.color.r, rightBallMaterial.color.g, rightBallMaterial.color.b, 0.6f);
+            StartCoroutine(BallAnimation());
             Debug.Log("Pouch Calibrated");
             StartCoroutine(VRControllerUtility.VibrateController(0.3f, 0.7f, 0.7f, OVRInput.Controller.All));
             if (calibrationState == CalibrationState.Pouch)
@@ -173,5 +206,33 @@ After you are done, you will be teleported to the tutorial scene."
     {
         yield return new WaitForSeconds(timeBPressed);
         isBHold = true;
+    }
+
+    private IEnumerator HandAnimation()
+    {
+        while (planeLeftHandMesh.material.GetFloat("_Opacity") > 0)
+        {
+            planeLeftHandMesh.material.SetFloat("_Opacity", planeLeftHandMesh.material.GetFloat("_Opacity") - 0.01f);
+            planeRightHandMesh.material.SetFloat("_Opacity", planeRightHandMesh.material.GetFloat("_Opacity") - 0.01f);
+            planeLeftHandMesh.material.SetFloat("_OutlineOpacity", planeLeftHandMesh.material.GetFloat("_OutlineOpacity") - 0.01f);
+            planeRightHandMesh.material.SetFloat("_OutlineOpacity", planeRightHandMesh.material.GetFloat("_OutlineOpacity") - 0.01f);
+            yield return new WaitForSeconds(0.02f);
+        }
+        planeLeftHand.SetActive(false);
+        planeRightHand.SetActive(false);
+    }
+
+    private IEnumerator BallAnimation()
+    {
+        Material leftBallMaterial = pouchLeftBall.GetComponent<MeshRenderer>().material;
+        Material rightBallMaterial = pouchRightBall.GetComponent<MeshRenderer>().material;
+        while (leftBallMaterial.color.a > 0)
+        {
+            leftBallMaterial.color = new Color(leftBallMaterial.color.r, leftBallMaterial.color.g, leftBallMaterial.color.b, leftBallMaterial.color.a - 0.01f);
+            rightBallMaterial.color = new Color(rightBallMaterial.color.r, rightBallMaterial.color.g, rightBallMaterial.color.b, rightBallMaterial.color.a - 0.01f);
+            yield return new WaitForSeconds(0.02f);
+        }
+        pouchLeftBall.SetActive(false);
+        pouchRightBall.SetActive(false);
     }
 }
