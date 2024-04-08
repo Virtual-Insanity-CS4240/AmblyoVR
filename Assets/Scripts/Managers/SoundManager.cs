@@ -70,7 +70,7 @@ public class SoundManager : SimpleSingleton<SoundManager>
 
     public void PlayBallChangingSound()
     {
-        SFXSource.PlayOneShot(ballChanging);
+        SFXSource.PlayOneShot(ballChanging, 0.5f);
     }
 
     public void PlayBallLandingSound()
