@@ -33,6 +33,7 @@ public class CustomGrab : MonoBehaviour
     private bool isTracking = false;
     private List<Vector3> trackedPositions = new List<Vector3>();
     private List<Quaternion> trackedRotations = new List<Quaternion>();
+    private bool isThrown = false;
 
     void Start()
     {
@@ -89,7 +90,7 @@ public class CustomGrab : MonoBehaviour
         {
             DropObject();
         }
-        if (isTracking)
+        if (isTracking && currGrabbedObject != null)
         {
             Debug.Log("position:" + OVRInput.GetLocalControllerPosition(Controller));
             Debug.Log("rotation:" + Quaternion.Euler(grabbedRigidbody.rotation.x, grabbedRigidbody.rotation.y, grabbedRigidbody.rotation.z));
@@ -287,6 +288,7 @@ public class CustomGrab : MonoBehaviour
             if (OVRInput.GetLocalControllerVelocity(Controller).magnitude > throwThreshold)
             {
                 SoundManager.Instance.PlayBallThrowingSound();
+                isThrown = true;
             }
             
             // Debug.Log("velocity:" + currGrabbedObject.GetComponent<Rigidbody>().velocity);
@@ -336,5 +338,10 @@ public class CustomGrab : MonoBehaviour
             strength += trackedPositions[i + 1] - trackedPositions[i];
         }
         return strength.magnitude;
+    }
+
+    public bool isBallThrown()
+    {
+        return isThrown;
     }
 }
