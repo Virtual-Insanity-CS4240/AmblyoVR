@@ -1329,7 +1329,7 @@ MonoBehaviour:
   rotationsBeforeRelease: 10
   throwStrength: 10
   rotationStrength: 0.1
-  curveStrength: 0.4
+  curveStrength: 0.5
 --- !u!120 &996192815786874484
 LineRenderer:
   m_ObjectHideFlags: 0
