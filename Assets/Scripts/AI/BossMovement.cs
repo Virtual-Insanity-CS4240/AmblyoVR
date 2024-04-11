@@ -13,9 +13,11 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Rigidbody))]
 public class BossMovement : MonoBehaviour
 {
+    [SerializeField] private Material[] colorMaterials;
     [SerializeField] private Material niceMaterial;
     [SerializeField] private GameObject ghostModel;
     [SerializeField] private int bossHits = 5;
+    [SerializeField] private GameObject hatObject;
     public float walkSpeed = 0.5f;
     private float teleportingSpeed = 0f;
     public float detectionRadius = 5f;
@@ -138,12 +140,18 @@ public class BossMovement : MonoBehaviour
     public void GhostHit()
     {
         bossHits--;
+        // Change colour of hat
+        int rand = Random.Range(0, 4);
+        hatObject.GetComponent<SkinnedMeshRenderer>().material = colorMaterials[rand];
+        ghostColor = (BallColor) rand;
         if (bossHits <= 0)
         {
-            ghostModel.GetComponent<SkinnedMeshRenderer>().material = niceMaterial;
+            hatObject.GetComponent<SkinnedMeshRenderer>().material = niceMaterial;
             ghostColor = BallColor.White;
             if (tutRoomReference != null)
                 tutRoomReference.BossDone();
+            if (roomReference != null)
+                roomReference.BossDied();
         }
         
     }
