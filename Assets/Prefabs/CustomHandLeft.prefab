@@ -1325,10 +1325,10 @@ MonoBehaviour:
   - {fileID: 3419224627125710525, guid: dfefbe830b2997142ba281f104d64325, type: 3}
   - {fileID: 2534763831118991305, guid: 976d8aae5c7a3294ca291b86fe33131b, type: 3}
   throwThreshold: 1
-  totalTrackedPositions: 25
-  positionsBeforeRelease: 15
+  totalTrackedPositions: 30
+  positionsBeforeRelease: 20
   rotationsBeforeRelease: 15
-  throwStrength: 20
+  throwStrength: 25
   rotationStrength: 0.1
   curveStrength: 1.6
 --- !u!120 &996192815786874484

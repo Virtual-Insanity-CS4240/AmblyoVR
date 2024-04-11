@@ -104,15 +104,16 @@ After you are done, you will be teleported to the tutorial scene."
             planeRightHand.SetActive(true);
             planeLeftHand.transform.position = leftController.transform.position;
             planeRightHand.transform.position = rightController.transform.position;
+            Vector3 midPoint = (leftHand.transform.position + rightHand.transform.position) / 2;
+            BodyManager planeManager = plane.GetComponent<BodyManager>();
+            planeManager.SetOffsetFromCenter(midPoint);
+            // planeManager.SetScale(leftHand.transform.position, rightHand.transform.position);
             planeLeftHandMesh.material.SetFloat("_Opacity", 0.6f);
             planeRightHandMesh.material.SetFloat("_Opacity", 0.6f);
             planeLeftHandMesh.material.SetFloat("_OutlineOpacity", 0.4f);
             planeRightHandMesh.material.SetFloat("_OutlineOpacity", 0.4f);
             StartCoroutine(HandAnimation());
-            Vector3 midPoint = (leftHand.transform.position + rightHand.transform.position) / 2;
-            BodyManager planeManager = plane.GetComponent<BodyManager>();
-            planeManager.SetOffsetFromCenter(midPoint);
-            planeManager.SetScale(leftHand.transform.position, rightHand.transform.position);
+
             Debug.Log("Hand Calibrated");
             StartCoroutine(VRControllerUtility.VibrateController(0.3f, 0.7f, 0.7f, OVRInput.Controller.All));
             if (calibrationState == CalibrationState.Hand)
@@ -139,7 +140,7 @@ After you are done, you will be teleported to the tutorial scene."
             pouchLeftBall.SetActive(true);
             pouchRightBall.SetActive(true);
             pouchManager.SetPosition(leftHand.transform.position, rightHand.transform.position);
-            pouchManager.SetScale(leftHand.transform.position, rightHand.transform.position);
+            // pouchManager.SetScale(leftHand.transform.position, rightHand.transform.position);
             pouchLeftBall.transform.position = leftController.transform.position + new Vector3(0.16f, 0, 0);
             pouchRightBall.transform.position = rightController.transform.position + new Vector3(0.16f, 0, 0);
             Material leftBallMaterial = pouchLeftBall.GetComponent<MeshRenderer>().material;

@@ -18636,6 +18636,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3846719992340643380, guid: 972b0a4b98d43244e86c40bb73caac0b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4142096110895523487, guid: 972b0a4b98d43244e86c40bb73caac0b,
         type: 3}
       propertyPath: eyeObject
@@ -18646,10 +18651,35 @@ PrefabInstance:
       propertyPath: calibrationText
       value: 
       objectReference: {fileID: 1551795346}
+    - target: {fileID: 4985111557620626031, guid: 972b0a4b98d43244e86c40bb73caac0b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5809109847070335489, guid: 972b0a4b98d43244e86c40bb73caac0b,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6170371705452391287, guid: 972b0a4b98d43244e86c40bb73caac0b,
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6675763712579509109, guid: 972b0a4b98d43244e86c40bb73caac0b,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885044766166051526, guid: 972b0a4b98d43244e86c40bb73caac0b,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885044766166051526, guid: 972b0a4b98d43244e86c40bb73caac0b,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7770305067049832892, guid: 972b0a4b98d43244e86c40bb73caac0b,
         type: 3}
