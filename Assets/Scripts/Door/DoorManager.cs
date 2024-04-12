@@ -24,10 +24,14 @@ public class DoorManager : MonoBehaviour
     {
         if (isEntered && !doorOpen && !isLocked && !(oneWayDoor && isOtherWay))
         {
+            if (!oneWayDoor)
+                isOtherWay = false;
             OpenDoor();
         }
         else if (!isEntered && doorOpen && (!oneWayDoor || isOtherWay))
         {
+            if (!oneWayDoor)
+                isOtherWay = false;
             CloseDoor();
         }
     }
@@ -36,10 +40,14 @@ public class DoorManager : MonoBehaviour
     {
         if (isEntered && !doorOpen && !isLocked && !(oneWayDoor && !isOtherWay))
         {
+            if (!oneWayDoor)
+                isOtherWay = true;
             OpenDoor();
         }
         else if (!isEntered && doorOpen && (!oneWayDoor || !isOtherWay))
         {
+            if (!oneWayDoor)
+                isOtherWay = true;
             CloseDoor();
         }
     }

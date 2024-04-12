@@ -24585,7 +24585,7 @@ MonoBehaviour:
   leftHand: {fileID: 3802231153947336737}
   rightHand: {fileID: 3802231153499210355}
   movementYAxisName: LHandJoystickYaxis
-  timeoutThreshold: 0.7
+  timeoutThreshold: 1
   speed: 1
   stoppingSpeed: 2
 --- !u!1 &4259027827692379154
