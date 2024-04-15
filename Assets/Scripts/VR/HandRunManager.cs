@@ -91,7 +91,7 @@ public class HandRunManager : SimpleSingleton<HandRunManager>
             {
                 leftTimer = 0;
             }
-            if (rightHandValue + leftHandValue == 0 && rightHandValue != 0)
+            if (((rightHandValue < 0 && leftHandValue > 0) || (rightHandValue > 0 && leftHandValue < 0)) && rightHandValue != 0)
             {
                 // leftHandValue = 0;
                 // rightHandValue = 0;
@@ -114,7 +114,7 @@ public class HandRunManager : SimpleSingleton<HandRunManager>
             {
                 rightTimer = 0;
             }
-            if (rightHandValue + leftHandValue == 0 && leftHandValue != 0)
+            if (((rightHandValue < 0 && leftHandValue > 0) || (rightHandValue > 0 && leftHandValue < 0)) && leftHandValue != 0)
             {
                 // leftHandValue = 0;
                 // rightHandValue = 0;
@@ -129,7 +129,7 @@ public class HandRunManager : SimpleSingleton<HandRunManager>
     {
         StartCoroutine(VRControllerUtility.VibrateController(0.1f, 0.5f, 0.5f, OVRInput.Controller.All));
         SoundManager.Instance.PlaySteppingSound();
-        Vector3 direction = Camera.main.transform.forward.normalized * speed * directionForward;
+        Vector3 direction = Camera.main.transform.forward.normalized * speed * directionForward * (OVRInput.GetLocalControllerVelocity(OVRInput.Controller.LTouch).magnitude + OVRInput.GetLocalControllerVelocity(OVRInput.Controller.RTouch).magnitude) / 2;
         movement = movement + new Vector3(direction.x, 0, direction.z);
         // Debug.Log("movement:" + movement);
     }

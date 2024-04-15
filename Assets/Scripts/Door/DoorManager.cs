@@ -13,6 +13,7 @@ public class DoorManager : MonoBehaviour
     private List<string> animations = new List<string>();
     private enum DoorAnimations { DoorOpen = 0, DoorClose = 1, DoorOpenOther = 2, DoorCloseOther = 3 }
     private bool doorOpen = false;
+    private bool isEnteredOtherWay = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,9 +27,10 @@ public class DoorManager : MonoBehaviour
         {
             if (!oneWayDoor)
                 isOtherWay = false;
+                isEnteredOtherWay = false;
             OpenDoor();
         }
-        else if (!isEntered && doorOpen && (!oneWayDoor || isOtherWay))
+        else if (!isEntered && doorOpen && ((!oneWayDoor && isEnteredOtherWay) || isOtherWay))
         {
             if (!oneWayDoor)
                 isOtherWay = false;
@@ -42,9 +44,10 @@ public class DoorManager : MonoBehaviour
         {
             if (!oneWayDoor)
                 isOtherWay = true;
+                isEnteredOtherWay = true;
             OpenDoor();
         }
-        else if (!isEntered && doorOpen && (!oneWayDoor || !isOtherWay))
+        else if (!isEntered && doorOpen && ((!oneWayDoor && !isEnteredOtherWay) || !isOtherWay))
         {
             if (!oneWayDoor)
                 isOtherWay = true;
