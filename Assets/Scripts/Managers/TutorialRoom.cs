@@ -26,9 +26,9 @@ public class TutorialRoom : MonoBehaviour
             else
             {
                 // Instantiate Boss in Room
-                foreach(GameObject ghost in spawnedGhosts)
+                for (int i = 0; i < spawnedGhosts.Length; i++)
                 {
-                    Destroy(ghost);
+                    spawnedGhosts[i].gameObject.SetActive(false);
                 }
                 GameObject bossGhost = Instantiate(bossPrefab, bossSpawnPosition.position, bossSpawnPosition.rotation);
                 bossGhost.transform.localScale = Vector3.one * 1.5f;
