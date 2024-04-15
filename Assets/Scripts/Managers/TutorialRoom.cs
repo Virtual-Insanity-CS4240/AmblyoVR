@@ -7,6 +7,7 @@ public class TutorialRoom : MonoBehaviour
     [SerializeField] private int totalGhosts;
     [SerializeField] private Transform bossSpawnPosition;
     [SerializeField] private GameObject bossPrefab;
+    public GameObject[] spawnedGhosts;
     private int niceGhostCount = 0;
     public bool isFirstRoom;
 
@@ -25,7 +26,7 @@ public class TutorialRoom : MonoBehaviour
             else
             {
                 // Instantiate Boss in Room
-                foreach(GameObject ghost in GameObject.FindGameObjectsWithTag("Ghost"))
+                foreach(GameObject ghost in spawnedGhosts)
                 {
                     Destroy(ghost);
                 }

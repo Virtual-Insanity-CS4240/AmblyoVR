@@ -215,6 +215,9 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
         ghost1.GetComponent<GhostMovement>().tutRoomReference = room2;
         ghost2.GetComponent<GhostMovement>().tutRoomReference = room2;
         ghost3.GetComponent< GhostMovement>().tutRoomReference = room2;
+        room2.spawnedGhosts[0] = ghost1;
+        room2.spawnedGhosts[1] = ghost2;
+        room2.spawnedGhosts[2] = ghost3;
     }
 
     // Start: <>
@@ -240,6 +243,7 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
         room3Door.OpenDoor();
         room3Door.UnlockDoor();
         screen2.material = billboardMaterials[11];
+        SoundManager.Instance.PlayBattleMusic();
     }
 
     private void HandleBallCountIncreased(int i)
