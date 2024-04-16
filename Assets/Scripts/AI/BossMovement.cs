@@ -44,6 +44,7 @@ public class BossMovement : MonoBehaviour
 
     void Update()
     {
+        transform.LookAt(player);
         if (agent.isActiveAndEnabled && agent.hasPath)
         {
             Vector3 currentPos = agent.transform.position;
