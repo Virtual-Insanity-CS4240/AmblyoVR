@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainLevel.unity
     guid: faa267130d81bd14786b84d365fff57a
+  - enabled: 1
+    path: Assets/Scenes/EndGame.unity
+    guid: 00440bb52b83cf14d88fda549a25ab1c
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 7c886bb2da4926c4cb21044bff88c94a,
       type: 2}

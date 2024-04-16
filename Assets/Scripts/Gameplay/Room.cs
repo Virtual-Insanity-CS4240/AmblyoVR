@@ -49,6 +49,7 @@ public class Room : MonoBehaviour
                 // TODO: Remove spooky light from the room
                 SoundManager.Instance.PlayCasualMusic();
                 roomActive = false;
+                EndGameManager.AddRoomComplete?.Invoke();
             }
         }
     }
@@ -58,6 +59,7 @@ public class Room : MonoBehaviour
         // TODO: Remove spooky light from the room
         SoundManager.Instance.PlayCasualMusic();
         roomActive = false;
+        EndGameManager.AddRoomComplete?.Invoke();
     }
 
     IEnumerator BossSpawn()

@@ -15,6 +15,8 @@ public class SoundManager : SimpleSingleton<SoundManager>
     public AudioClip bgmBattleLoop;
     public AudioClip bgmCasualCleanIntro;
     public AudioClip bgmCasualLoop;
+    public AudioClip bgmWinCleanIntro;
+    public AudioClip bgmWinLoop;
 
     [Header("AudioClip - Sound Effects")]
     public AudioClip ballChanging;
@@ -66,6 +68,11 @@ public class SoundManager : SimpleSingleton<SoundManager>
     public void PlayCasualMusic()
     {
         PlayBGMSequence(bgmCasualCleanIntro, bgmCasualLoop);
+    }
+
+    public void PlayWinMusic()
+    {
+        PlayBGMSequence(bgmWinCleanIntro, bgmWinLoop);
     }
 
     public void PlayBallChangingSound()

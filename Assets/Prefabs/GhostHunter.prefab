@@ -359,6 +359,8 @@ MonoBehaviour:
   bgmBattleLoop: {fileID: 8300000, guid: a135f3339fd64ec4a9ed986be64a8a50, type: 3}
   bgmCasualCleanIntro: {fileID: 8300000, guid: e85b0774f882ab9499f374ceb13cbdbf, type: 3}
   bgmCasualLoop: {fileID: 8300000, guid: 091dc873a57f2d941a6fa2d51684b716, type: 3}
+  bgmWinCleanIntro: {fileID: 8300000, guid: c4d5ceea40223ee459a53069d563ff20, type: 3}
+  bgmWinLoop: {fileID: 8300000, guid: 54cbb712ea809e649a7dafb8a7244015, type: 3}
   ballChanging: {fileID: 8300000, guid: ac04a2936651b104b9c1840a99ff95ef, type: 3}
   ballLanding: {fileID: 8300000, guid: feccb1c2c0ec5e64fb73e9a78c7cc48e, type: 3}
   ballThrowing: {fileID: 8300000, guid: ae1a1fa040569754b9a2c04f6867df55, type: 3}
@@ -7000,7 +7002,7 @@ MonoBehaviour:
   rightHand: {fileID: 3802231153499210355}
   movementYAxisName: LHandJoystickYaxis
   timeoutThreshold: 1
-  speed: 0.15
+  speed: 0.18
   stoppingSpeed: 2
 --- !u!1 &4259027827692379154
 GameObject:
