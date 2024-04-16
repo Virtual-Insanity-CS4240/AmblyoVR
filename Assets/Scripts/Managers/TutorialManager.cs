@@ -123,6 +123,9 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
             case 7:
                 StartCoroutine(Flag7Event());
                 break;
+            case 8:
+                StartCoroutine(Flag8Event());
+                break;
             default:
                 Debug.LogWarning("Weird flag detected: " + tutorialStep);
                 break;
@@ -215,9 +218,9 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
         ghost1.GetComponent<GhostMovement>().tutRoomReference = room2;
         ghost2.GetComponent<GhostMovement>().tutRoomReference = room2;
         ghost3.GetComponent< GhostMovement>().tutRoomReference = room2;
-        room2.spawnedGhosts[0] = ghost1;
-        room2.spawnedGhosts[1] = ghost2;
-        room2.spawnedGhosts[2] = ghost3;
+        room2.spawnedGhosts.Add(ghost1);
+        room2.spawnedGhosts.Add(ghost2);
+        room2.spawnedGhosts.Add(ghost3);
     }
 
     // Start: <>
@@ -243,7 +246,12 @@ public class TutorialManager : SimpleSingleton<TutorialManager>
         room3Door.OpenDoor();
         room3Door.UnlockDoor();
         screen2.material = billboardMaterials[11];
+    }
+    
+    private IEnumerator Flag8Event()
+    {
         SoundManager.Instance.PlayBattleMusic();
+        yield return null;
     }
 
     private void HandleBallCountIncreased(int i)

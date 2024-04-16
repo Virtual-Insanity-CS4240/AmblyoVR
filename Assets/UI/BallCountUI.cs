@@ -17,7 +17,7 @@ public class BallCountUI : MonoBehaviour
         UpdateUI();
     }
 
-        private void UpdateUI()
+    private void UpdateUI()
     {
         ballIcon.sprite = ballIcons[(int)PlayerInventory.equippedBallColor];
         ballCountText.text = PlayerInventory.ballCount.ToString();

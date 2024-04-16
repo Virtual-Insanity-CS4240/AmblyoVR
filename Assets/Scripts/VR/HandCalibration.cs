@@ -33,29 +33,31 @@ public class HandCalibration : MonoBehaviour
     private bool isBHold = false;
     private bool isBReleased = true;
     [SerializeField] private Text calibrationText;
+    [SerializeField] private Text emphasisText;
+    [SerializeField] private GameObject calibrationLeftController;
+    [SerializeField] private GameObject calibrationRightController;
+    [SerializeField] private GameObject ButtonA;
+    [SerializeField] private GameObject ButtonB;
+    [SerializeField] private GameObject PokeBallUI;
     [SerializeField] private CalibrationState calibrationState = CalibrationState.Hand;
+    private float timer;
     private string[] calibrationTexts = {
         @"Welcome to AmblyoVR
-This is the Calibration Scene.
-
-Firstly, put both of your hands in front of you and hold the 'A' button.",
+This is the Calibration Scene.",
 @"Great! This is your running position.
-You can move your hands alternately up and down near this position to move forward
-in the direction you are facing.
-
-Push the left joystick down while running to move backwards instead.
-
-Once you are done trying, put your hands at your waist level and hold the 'B' button.",
+You need to have your hands at the height you pressed 'A' to move forward. Move your hands up and down to run. Push the left joystick towards you while running to move backwards.
+You can try moving now!",
 @"Awesome! This is your pouch position.
-
-Press and hold the grab trigger (middle finger) near the pouch position to get a ball.
-You now have a lot of balls in you inventory for you to try.
-
-Release the grab trigger to throw the ball.",
+Press and hold the grab trigger (middle finger) to get a ball at your pouch. Your hand shows how many balls you have. Release the grab to throw.",
 @"Good job! You are almost done with calibration.
-
-Adjust your eye settings in front of you.
+You can interact with the screen by pressing your index trigger
 After you are done, you will be teleported to the tutorial scene."
+    };
+    private string[] emphasisTexts = {
+        @"Put both of your hands in front of you and hold the 'A' button.",
+        @"Once done, put your hands at your waist level and hold the 'B' button.",
+        @"Grab the ball from your pouch and throw it.",
+        @"Adjust your eye settings"
     };
 
     // Start is called before the first frame update
@@ -65,6 +67,7 @@ After you are done, you will be teleported to the tutorial scene."
         if (calibrationText != null)
         {
             calibrationText.text = calibrationTexts[0];
+            emphasisText.text = emphasisTexts[0];
         }
         if (eyeObject != null)
         {
@@ -76,6 +79,13 @@ After you are done, you will be teleported to the tutorial scene."
         planeRightHandMesh.material.SetColor("_ColorTop", Color.white);
         pouchLeftBall.SetActive(false);
         pouchRightBall.SetActive(false);
+        leftHand.SetActive(false);
+        rightHand.SetActive(false);
+        calibrationLeftController.SetActive(true);
+        calibrationRightController.SetActive(true);
+        ButtonA.SetActive(false);
+        ButtonB.SetActive(false);
+        PokeBallUI.SetActive(false);
         // Vector3 midPoint = (leftHand.transform.position + rightHand.transform.position) / 2;
         // BodyManager planeManager = plane.GetComponent<BodyManager>();
         // planeManager.SetOffsetFromCenter(midPoint);
@@ -85,6 +95,17 @@ After you are done, you will be teleported to the tutorial scene."
     // Update is called once per frame
     void Update()
     {
+        timer += Time.deltaTime;
+        if (calibrationState == CalibrationState.Hand && timer > 0.4)
+        {
+            ButtonA.SetActive(!ButtonA.activeSelf);
+            timer = 0;
+        }
+        if (calibrationState == CalibrationState.Pouch && timer > 0.4)
+        {
+            ButtonB.SetActive(!ButtonB.activeSelf);
+            timer = 0;
+        }
         if (calibrationState == CalibrationState.Grab && (leftGrab.isBallThrown() || rightGrab.isBallThrown()))
         {
             NextState();
@@ -102,11 +123,12 @@ After you are done, you will be teleported to the tutorial scene."
             Debug.Log("A pressed");
             planeLeftHand.SetActive(true);
             planeRightHand.SetActive(true);
-            planeLeftHand.transform.position = leftController.transform.position;
-            planeRightHand.transform.position = rightController.transform.position;
             Vector3 midPoint = (leftHand.transform.position + rightHand.transform.position) / 2;
             BodyManager planeManager = plane.GetComponent<BodyManager>();
             planeManager.SetOffsetFromCenter(midPoint);
+            planeLeftHand.transform.position = leftController.transform.position;
+            planeRightHand.transform.position = rightController.transform.position;
+
             // planeManager.SetScale(leftHand.transform.position, rightHand.transform.position);
             planeLeftHandMesh.material.SetFloat("_Opacity", 0.6f);
             planeRightHandMesh.material.SetFloat("_Opacity", 0.6f);
@@ -121,6 +143,7 @@ After you are done, you will be teleported to the tutorial scene."
                 NextState();
             }
             isAHold = false;
+            ButtonA.SetActive(false);
         }
         if (AbuttonValue == 0)
         {
@@ -141,8 +164,8 @@ After you are done, you will be teleported to the tutorial scene."
             pouchRightBall.SetActive(true);
             pouchManager.SetPosition(leftHand.transform.position, rightHand.transform.position);
             // pouchManager.SetScale(leftHand.transform.position, rightHand.transform.position);
-            pouchLeftBall.transform.position = leftController.transform.position + new Vector3(0.16f, 0, 0);
-            pouchRightBall.transform.position = rightController.transform.position + new Vector3(0.16f, 0, 0);
+            pouchLeftBall.transform.position = leftController.transform.position;
+            pouchRightBall.transform.position = rightController.transform.position;
             Material leftBallMaterial = pouchLeftBall.GetComponent<MeshRenderer>().material;
             Material rightBallMaterial = pouchRightBall.GetComponent<MeshRenderer>().material;
             leftBallMaterial.color = new Color(leftBallMaterial.color.r, leftBallMaterial.color.g, leftBallMaterial.color.b, 0.6f);
@@ -152,9 +175,15 @@ After you are done, you will be teleported to the tutorial scene."
             StartCoroutine(VRControllerUtility.VibrateController(0.3f, 0.7f, 0.7f, OVRInput.Controller.All));
             if (calibrationState == CalibrationState.Pouch)
             {
+                calibrationLeftController.SetActive(false);
+                calibrationRightController.SetActive(false);
+                leftHand.SetActive(true);
+                rightHand.SetActive(true);
+                PokeBallUI.SetActive(true);
                 NextState();
             }
             isBHold = false;
+            ButtonB.SetActive(false);
         }
         if (BbuttonValue == 0)
         {
@@ -171,6 +200,7 @@ After you are done, you will be teleported to the tutorial scene."
                 if (calibrationText != null)
                 {
                     calibrationText.text = calibrationTexts[1];
+                    emphasisText.text = emphasisTexts[1];
                 }
                 break;
             case CalibrationState.Pouch:
@@ -178,6 +208,7 @@ After you are done, you will be teleported to the tutorial scene."
                 if (calibrationText != null)
                 {
                     calibrationText.text = calibrationTexts[2];
+                    emphasisText.text = emphasisTexts[2];
                 }
                 break;
             case CalibrationState.Grab:
@@ -185,6 +216,7 @@ After you are done, you will be teleported to the tutorial scene."
                 if (calibrationText != null)
                 {
                     calibrationText.text = calibrationTexts[3];
+                    emphasisText.text = emphasisTexts[3];
                 }
                 if (eyeObject != null)
                 {

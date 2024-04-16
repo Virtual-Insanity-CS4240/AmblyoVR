@@ -61,11 +61,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5cb993dbe02ee2419a76e013d2cc2b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorMaterials: []
   niceMaterial: {fileID: 2100000, guid: d11e6205c7cc9470aacd9fde3100bfe2, type: 2}
   ghostModel: {fileID: 9126132746680879656}
   bossHits: 5
+  hatObject: {fileID: 0}
   walkSpeed: 0.5
-  detectionRadius: 1
+  detectionRadius: 2
   walkDuration: 2
   stopDuration: 4
   edgeDetectionDistance: 0.5

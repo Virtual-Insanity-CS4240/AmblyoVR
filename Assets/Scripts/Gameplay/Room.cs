@@ -5,13 +5,34 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {    
-    [SerializeField] private int totalGhosts;
+    private int totalGhosts;
     [SerializeField] private bool isBossRoom;
     [SerializeField] private Transform bossSpawnPosition;
     [SerializeField] private GameObject bossPrefab;
+    [SerializeField] private GameObject[] spawnedGhosts;
     private int niceGhostCount = 0;
 
-    private bool roomActive = true;
+    public bool roomActive = true;
+
+    void Start()
+    {
+        totalGhosts = spawnedGhosts.Length;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player") && roomActive)
+        {
+            SoundManager.Instance.PlayBattleMusic();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") && roomActive)
+        {
+            SoundManager.Instance.PlayCasualMusic();
+        }
+    }
 
     public void GhostHit() 
     {
@@ -21,12 +42,13 @@ public class Room : MonoBehaviour
             if (isBossRoom)
             {
                 // Instantiate Boss in Room if have, turn light spookier
-                SoundManager.Instance.PlayWarningSound();
-                SoundManager.Instance.PlayBossFightMusic();
+                StartCoroutine(BossSpawn());
             }
             else
             {
                 // TODO: Remove spooky light from the room
+                SoundManager.Instance.PlayCasualMusic();
+                roomActive = false;
             }
         }
     }
@@ -35,5 +57,22 @@ public class Room : MonoBehaviour
     {
         // TODO: Remove spooky light from the room
         SoundManager.Instance.PlayCasualMusic();
+        roomActive = false;
+    }
+
+    IEnumerator BossSpawn()
+    {
+        SoundManager.Instance.PlayWarningSound();
+        foreach (GameObject ghost in spawnedGhosts)
+        {
+            Destroy(ghost);
+        }
+        yield return new WaitForSeconds(2);
+        SoundManager.Instance.StopMusic();
+        GameObject bossGhost = Instantiate(bossPrefab, bossSpawnPosition.position, bossSpawnPosition.rotation);
+        bossGhost.transform.localScale = Vector3.one * 1.5f;
+        bossGhost.GetComponent<BossMovement>().roomReference = this;
+        Debug.Log("Boss Spawned!");
+        SoundManager.Instance.PlayBossFightMusic();
     }
 }

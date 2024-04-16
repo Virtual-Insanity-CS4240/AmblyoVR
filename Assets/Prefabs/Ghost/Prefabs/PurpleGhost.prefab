@@ -87,7 +87,7 @@ MonoBehaviour:
   ghostModel: {fileID: 9126132746680879656}
   walkSpeed: 0.8
   runSpeed: 1.2
-  detectionRadius: 2
+  detectionRadius: 3
   walkDuration: 3
   stopDuration: 2
   edgeDetectionDistance: 0.5

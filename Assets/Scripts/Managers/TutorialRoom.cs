@@ -7,7 +7,7 @@ public class TutorialRoom : MonoBehaviour
     [SerializeField] private int totalGhosts;
     [SerializeField] private Transform bossSpawnPosition;
     [SerializeField] private GameObject bossPrefab;
-    public GameObject[] spawnedGhosts;
+    public List<GameObject> spawnedGhosts;
     private int niceGhostCount = 0;
     public bool isFirstRoom;
 
@@ -26,15 +26,7 @@ public class TutorialRoom : MonoBehaviour
             else
             {
                 // Instantiate Boss in Room
-                for (int i = 0; i < spawnedGhosts.Length; i++)
-                {
-                    spawnedGhosts[i].gameObject.SetActive(false);
-                }
-                GameObject bossGhost = Instantiate(bossPrefab, bossSpawnPosition.position, bossSpawnPosition.rotation);
-                bossGhost.transform.localScale = Vector3.one * 1.5f;
-                bossGhost.GetComponent<BossMovement>().tutRoomReference = this;
-                TutorialManager.UpdateTutorialFlag(6);
-                SoundManager.Instance.PlayBossFightMusic();
+                StartCoroutine(BossSpawn());
             }
         }
     }
@@ -43,5 +35,22 @@ public class TutorialRoom : MonoBehaviour
     {
         SoundManager.Instance.PlayCasualMusic();
         TutorialManager.UpdateTutorialFlag(7);
+    }
+
+    IEnumerator BossSpawn()
+    {
+        SoundManager.Instance.PlayWarningSound();
+        foreach (GameObject ghost in spawnedGhosts)
+        {
+            Destroy(ghost);
+        }
+        yield return new WaitForSeconds(2);
+        SoundManager.Instance.StopMusic();
+        GameObject bossGhost = Instantiate(bossPrefab, bossSpawnPosition.position, bossSpawnPosition.rotation);
+        bossGhost.transform.localScale = Vector3.one * 1.5f;
+        bossGhost.GetComponent<BossMovement>().tutRoomReference = this;
+        TutorialManager.UpdateTutorialFlag(6);
+        Debug.Log("Boss Spawned!");
+        SoundManager.Instance.PlayBossFightMusic();
     }
 }

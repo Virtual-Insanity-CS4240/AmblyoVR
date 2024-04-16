@@ -118,6 +118,11 @@ public class SoundManager : SimpleSingleton<SoundManager>
         SFXSource.PlayOneShot(stepping, 0.3f);
     }
 
+    public void StopMusic()
+    {
+        musicSource.Stop();
+    }
+
     private void PlayBGMSequence(AudioClip bgm1, AudioClip bgm2)
     {
         musicSource.Stop();

@@ -22,13 +22,13 @@ public class BodyManager : MonoBehaviour
     {
         // offsetGameObject.transform.localPosition = characterController.center + offset;
         transform.localPosition = characterController.center;
-        transform.localRotation = Quaternion.Euler(0, cameraObject.transform.localEulerAngles.y, 0);
         // Debug.Log("euler: " + cameraObject.transform.localEulerAngles.y);
         // Debug.Log("Local Rotation: " + cameraObject.transform.localRotation.y);
     }
 
     public void SetOffsetFromCenter(Vector3 midPoint)
     {
+        transform.localRotation = Quaternion.Euler(0, cameraObject.transform.localEulerAngles.y, 0);
         offsetGameObject.transform.position = midPoint;
     }
 
