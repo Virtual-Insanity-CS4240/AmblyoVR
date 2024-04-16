@@ -496,8 +496,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.6740038
-  m_Height: 2.436397
+  m_Radius: 0.7
+  m_Height: 2.5
   m_Direction: 1
   m_Center: {x: -0.0006008744, y: -0.15700912, z: 0}
 --- !u!95 &-4336760512230286489
@@ -540,8 +540,8 @@ MonoBehaviour:
   ghostModel: {fileID: 227173971318911920}
   bossHits: 5
   hatObject: {fileID: 3521061836651822524}
-  walkSpeed: 0.5
-  detectionRadius: 1
+  walkSpeed: 0.8
+  detectionRadius: 2.5
   walkDuration: 2
   stopDuration: 4
   edgeDetectionDistance: 0.5
@@ -558,8 +558,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 1.3
+  m_Acceleration: 1
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
