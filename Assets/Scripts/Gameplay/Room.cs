@@ -72,7 +72,7 @@ public class Room : MonoBehaviour
         yield return new WaitForSeconds(2);
         SoundManager.Instance.StopMusic();
         GameObject bossGhost = Instantiate(bossPrefab, bossSpawnPosition.position, bossSpawnPosition.rotation);
-        bossGhost.transform.localScale = Vector3.one * 1.5f;
+        bossGhost.transform.localScale = Vector3.one * 1.2f;
         bossGhost.GetComponent<BossMovement>().roomReference = this;
         Debug.Log("Boss Spawned!");
         SoundManager.Instance.PlayBossFightMusic();
